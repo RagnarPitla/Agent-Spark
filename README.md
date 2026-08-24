@@ -8,6 +8,12 @@ A zero-friction agent factory for Microsoft Copilot Studio.
 > in CI on every push. Everything in `templates/` and `skills/` is usable by hand, with no tooling.
 > What does not exist: any executable named `agentspark`. See [Status](#status) for the exact line.
 
+The landing page source lives in [`site/`](site/) and is dependency-free static HTML. It is not
+published yet: GitHub Pages has to be enabled once by hand under Settings -> Pages -> Source =
+"GitHub Actions", and `.github/workflows/pages.yml` only deploys from `main`. Once both are true
+it publishes to `https://ragnarpitla.github.io/Agent-Spark/`. To read it now, open
+`site/index.html` in a browser or run `python3 -m http.server 8765 --directory site`.
+
 ## What problem this solves
 
 A customer starting a Copilot Studio agent today assembles their own path through installer docs,
@@ -79,6 +85,7 @@ templates/    Complete scenario templates, versioned and owned
 skills/       Reusable skill packages with examples and evaluations
 samples/      Example generated output, checked against the schemas
 scripts/      validate.mjs, the only executable code in the repo today
+site/         Source for the landing page. Dependency-free static HTML.
 cli/          Command specification. No implementation.
 packages/     Package contracts. No implementation.
 ```

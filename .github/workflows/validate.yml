@@ -34,11 +34,16 @@ jobs:
 
       - name: Confirm no template variables leaked into samples
         run: |
-          if grep -rn '{{' samples/ ; then
-            echo "::error::samples contain unreplaced template variables"
+          # Scans sample PROJECT directories, not samples/README.md. The README
+          # is documentation about the samples, and it has to be able to quote
+          # the variable syntax when telling contributors to grep for it.
+          # samples/*/ expands to the project directories only, so the carve-out
+          # needs no maintained exclusion list.
+          if grep -rn '{{' samples/*/ ; then
+            echo "::error::a sample project contains unreplaced template variables"
             exit 1
           fi
-          echo "samples are fully rendered"
+          echo "sample projects are fully rendered"
 
       - name: Confirm no template ships with publishing enabled
         run: |

@@ -15,7 +15,7 @@ HR policy handbook.
 ```
 contoso-knowledge-assistant/
   agentspark.yaml                     project manifest, validated against agent-project.schema.json
-  instructions.md                     rendered, no {{variables}} remaining
+  instructions.md                     rendered, with every variable replaced
   skills/answer-with-sources/         pinned at 0.1.0, pointer rather than a copy
   evals/baseline.yaml                 validated against evaluation.schema.json
 ```
