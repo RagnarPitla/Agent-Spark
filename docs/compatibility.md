@@ -7,8 +7,9 @@ Two kinds of statement appear here, and they are labelled:
 - **Verified.** Someone ran it and recorded the result.
 - **Intended.** A design target with no test behind it.
 
-Everything about the Copilot Studio platform in this document is currently **intended**. Phase 0 in
-the [PRD](prd.md) exists to convert it.
+Statements about the Copilot Studio platform are mostly still **intended**. One exception, added
+2026-08-24: the `pac copilot` command surface has been verified against the published reference.
+Phase 0 in the [PRD](prd.md) exists to convert the rest.
 
 ## This repository
 
@@ -35,7 +36,11 @@ install is easier to distribute and update.
 
 ## Power Platform CLI
 
-**Intended.** No claim in this section has been checked against an installed `pac`.
+**Command surface verified 2026-08-24** against the
+[published reference](https://learn.microsoft.com/en-us/power-platform/developer/cli/reference/copilot)
+(page `ms.date` 2026-02-25, updated 2026-07-10). **Behavior against a real environment is still
+intended**, and that distinction matters: knowing a command exists is not knowing what it does to a
+tenant. See [official-resources.md](official-resources.md) for what was checked.
 
 The design does not pin a minimum version. It discovers capability at runtime by reading the
 version and parsing help output, then caches the result keyed by version. See
@@ -45,19 +50,31 @@ That approach is chosen precisely because a pinned minimum would be a guess. Wha
 output is not a stable API, so parsing it is fragile and the parser needs its own tests against
 recorded output from several versions.
 
-### What Phase 0 has to answer
+### Verified behavior that constrains the design
 
-1. Which `pac copilot` commands exist in the current release, with their exact parameters.
-2. Whether workspace commands behave differently for GitHub Copilot harness agents than for
+| Finding | Consequence |
+| --- | --- |
+| `init --environment` scaffolds, packs, imports and connects | It is a tenant write behind a local-sounding name. Gated like a publish, and off the default path |
+| `push` stops on a server-side change and directs you to pull | Presented as a conflict with both sides visible. Never auto-pulled |
+| `clone` refuses to write into a non-empty target folder | Surfaced at plan time rather than failing mid-execution |
+| `delete` requires `--confirm` / `-y` | Target identity is displayed before the prompt |
+| `model list` / `predict` / `prepare-fetch` exist | Absent from the source brief. No proposed use yet |
+
+### What Phase 0 still has to answer
+
+1. Whether workspace commands behave differently for GitHub Copilot harness agents than for
    standard harness agents.
-3. What the on-disk workspace format is, and whether it is documented or incidental.
-4. Which commands are preview, and what the preview policy implies for a tool that wraps them.
-5. What a `push` conflict actually looks like, so the adapter can present it rather than surface a
-   raw exit code.
+2. What the on-disk workspace format is, and whether it is documented or incidental.
+3. Which commands are preview, and what the preview policy implies for a tool that wraps them.
+4. What the verified commands actually do against a live environment, as opposed to what the
+   reference says they do.
 
-Question 3 matters most. If the workspace format is incidental rather than documented, generating
+Question 2 matters most. If the workspace format is incidental rather than documented, generating
 into it is building on something that can change without notice, and the design has to route
 through supported commands instead of writing workspace files directly.
+
+Two questions were closed on 2026-08-24: which commands exist, and what a `push` conflict looks
+like. Both are recorded above.
 
 ## Harness compatibility
 
@@ -67,6 +84,13 @@ through supported commands instead of writing workspace files directly.
 That flag stays false until a recorded round trip exists. Setting it true without one would make
 the manifest lie in a machine-readable way, which is worse than an honest false, because tooling
 downstream would believe it.
+
+**Verified 2026-08-24:** the three harnesses bill differently. The GitHub Copilot harness uses
+usage-based Copilot Credits. The standard and Copilot chat harnesses are licence-based. A tool that
+picks a harness for a user is therefore picking their cost model, which is why harness choice is
+explicit and the billing implication appears in the plan before anything runs. See
+[official-resources.md](official-resources.md) and
+[ADR-0003](adr/0003-plan-first-execution.md).
 
 ## Preview features
 
