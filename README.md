@@ -8,11 +8,19 @@ A zero-friction agent factory for Microsoft Copilot Studio.
 > in CI on every push. Everything in `templates/` and `skills/` is usable by hand, with no tooling.
 > What does not exist: any executable named `agentspark`. See [Status](#status) for the exact line.
 
-The landing page source lives in [`site/`](site/) and is dependency-free static HTML. It is not
-published yet: GitHub Pages has to be enabled once by hand under Settings -> Pages -> Source =
-"GitHub Actions", and `.github/workflows/pages.yml` only deploys from `main`. Once both are true
-it publishes to `https://ragnarpitla.github.io/Agent-Spark/`. To read it now, open
-`site/index.html` in a browser or run `python3 -m http.server 8765 --directory site`.
+The landing page source lives in [`site/`](site/) and is dependency-free static HTML. Its target
+address is `https://ragnarpitla.github.io/Agent-Spark/`, which is not live yet. Two things gate it,
+and the first one is the current blocker:
+
+1. **This repository is private.** GitHub Pages on a private repository requires a paid plan, so
+   enabling it on the current account fails with `422: Your current plan does not support GitHub
+   Pages for this repository`. Making the repository public removes this blocker and exposes every
+   tracked file and the full commit history, so it is a deliberate decision rather than a step.
+2. **Pages source must be set to "GitHub Actions"** under Settings -> Pages -> Source.
+   `.github/workflows/pages.yml` deploys from `main` only, and it has never run.
+
+Until both hold, read the page locally with `python3 -m http.server 8765 --directory site` and open
+`http://127.0.0.1:8765/`, or open `site/index.html` directly in a browser.
 
 ## What problem this solves
 
