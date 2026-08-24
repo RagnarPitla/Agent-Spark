@@ -72,14 +72,19 @@
     <div class="container">
       <div class="hero-copy">
         <p class="hero-kicker badge"><img src="./assets/favicon.svg" alt="" width="12" height="12">Agent Spark</p>
-        <h1 id="hero-heading">Seven decisions stand between a customer and their first Copilot Studio agent. Make them once.</h1>
+        <h1 id="hero-heading">Build Copilot Studio agents with Agent Spark</h1>
+        <p class="hero-promise">
+          Versioned templates, skills and evaluation suites for Copilot Studio agents. Copy a
+          folder, replace eight variables, own the result. No install, nothing to lock into.
+        </p>
         <p class="sub-line">
-          Every new agent starts with the same assembly job: installer docs, <code>pac</code>
-          command references, folder conventions, sample agents, skill formats, evaluation
-          setup, governance guidance. That work gets repeated per customer and produces a
-          different answer every time. <strong>Agent Spark moves those decisions into
-          versioned content you can read, diff and own</strong> rather than advice you have
-          to reassemble from seven places.
+          <strong>Seven decisions stand between a customer and their first agent. Make them
+          once.</strong> Every new agent starts with the same assembly job: installer docs,
+          <code>pac</code> command references, folder conventions, sample agents, skill
+          formats, evaluation setup, governance guidance. That work gets repeated per
+          customer and produces a different answer every time. Agent Spark moves those
+          decisions into versioned content you can read, diff and own rather than advice you
+          have to reassemble from seven places.
         </p>
         <p class="sub-line">
           This is a pre-alpha concept repository. The templates and skills are usable by
@@ -168,6 +173,86 @@
         decisions were never written down in a form a machine could check or a reviewer could
         diff, so each project quietly re-litigates them and the results drift apart.
       </p>
+
+      <figure class="figure">
+        <div class="diagram">
+          <svg viewBox="0 0 880 400" role="img" aria-label="The same job drawn twice. Today, seven separate sources - installer docs, the pac reference, a sample agent, folder layout, skill format, evaluation setup and governance guidance - all feed into a step called assemble by hand, which produces a different agent each time. With Agent Spark, one path runs left to right instead: copy a template of eight files, replace eight variables from the checklist, author the result in Copilot Studio by hand, and arrive at the same reviewed starting point for every customer.">
+
+            <!-- TODAY -->
+            <text x="20" y="22" fill="#737373" font-size="11" font-weight="700" letter-spacing="0.08em" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">TODAY</text>
+
+            <g font-size="13" fill="#0a0a0a">
+              <polygon points="34,48 40,54 34,60 28,54" fill="#737373"/><text x="54" y="58">installer docs</text>
+              <polygon points="34,74 40,80 34,86 28,80" fill="#737373"/><text x="54" y="84">pac reference</text>
+              <polygon points="34,100 40,106 34,112 28,106" fill="#737373"/><text x="54" y="110">a sample agent</text>
+              <polygon points="34,126 40,132 34,138 28,132" fill="#737373"/><text x="54" y="136">folder layout</text>
+              <polygon points="34,152 40,158 34,164 28,158" fill="#737373"/><text x="54" y="162">skill format</text>
+              <polygon points="34,178 40,184 34,190 28,184" fill="#737373"/><text x="54" y="188">evaluation setup</text>
+              <polygon points="34,204 40,210 34,216 28,210" fill="#737373"/><text x="54" y="214">governance</text>
+            </g>
+
+            <g stroke="#737373" stroke-width="1.2" fill="none" opacity="0.85">
+              <path d="M196 54 L300 130"/>
+              <path d="M196 80 L300 130"/>
+              <path d="M196 106 L300 130"/>
+              <path d="M196 132 L300 130"/>
+              <path d="M196 158 L300 130"/>
+              <path d="M196 184 L300 130"/>
+              <path d="M196 210 L300 130"/>
+            </g>
+
+            <rect x="310" y="106" width="170" height="48" rx="7" fill="none" stroke="#737373" stroke-width="2"/>
+            <text x="395" y="135" text-anchor="middle" font-size="13" font-weight="650" fill="#0a0a0a">assemble by hand</text>
+
+            <g stroke="#737373" stroke-width="2" fill="none"><path d="M480 130 H522"/></g>
+            <polygon points="522,126 530,130 522,134" fill="#737373"/>
+
+            <rect x="530" y="106" width="300" height="48" rx="7" fill="none" stroke="#e5e5e5" stroke-width="2"/>
+            <text x="680" y="135" text-anchor="middle" font-size="13" fill="#737373">a different agent each time</text>
+
+            <line x1="20" y1="248" x2="860" y2="248" stroke="#e5e5e5" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+            <!-- AGENT SPARK -->
+            <text x="20" y="286" fill="#737373" font-size="11" font-weight="700" letter-spacing="0.08em" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">AGENT SPARK</text>
+
+            <g font-size="13" font-weight="650" fill="#0a0a0a" text-anchor="middle">
+              <rect x="20" y="306" width="170" height="48" rx="7" fill="none" stroke="#0a0a0a" stroke-width="2"/>
+              <text x="105" y="335">copy a template</text>
+
+              <rect x="218" y="306" width="180" height="48" rx="7" fill="none" stroke="#0a0a0a" stroke-width="2"/>
+              <text x="308" y="335">replace 8 variables</text>
+
+              <rect x="426" y="306" width="210" height="48" rx="7" fill="none" stroke="#0a0a0a" stroke-width="2"/>
+              <text x="531" y="335">author in Copilot Studio</text>
+
+              <rect x="664" y="306" width="196" height="48" rx="7" fill="none" stroke="#0a0a0a" stroke-width="3"/>
+              <text x="762" y="335">the same start</text>
+            </g>
+
+            <g stroke="#0a0a0a" stroke-width="2" fill="none">
+              <path d="M190 330 H210"/>
+              <path d="M398 330 H418"/>
+              <path d="M636 330 H656"/>
+            </g>
+            <g fill="#0a0a0a">
+              <polygon points="210,326 218,330 210,334"/>
+              <polygon points="418,326 426,330 418,334"/>
+              <polygon points="656,326 664,330 656,334"/>
+            </g>
+
+            <g font-size="12" fill="#737373" text-anchor="middle">
+              <text x="105" y="374">eight files</text>
+              <text x="308" y="374">checklist in the README</text>
+              <text x="531" y="374">by hand today</text>
+              <text x="762" y="374">every customer</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>
+          The same job, drawn twice. Nothing in the lower row is automated yet - you still author
+          the agent yourself. What changes is where the eight decisions come from.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
