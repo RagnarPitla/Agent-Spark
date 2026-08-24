@@ -353,6 +353,40 @@
         not locked in to anything: the output is Markdown and YAML you now own, in a folder,
         with no tool required to open it and none required to leave.
       </p>
+
+      <figure class="figure">
+        <div class="diagram">
+          <svg viewBox="0 0 560 268" role="img" aria-label="The eight files the knowledge assistant template generates, listed as a folder tree. A README with the variable checklist, agent instructions, security notes, and README files for skills, knowledge and tools, plus a baseline evaluation suite and deployment settings. The tools file records that no write tools are attached, and the deployment file ships with publishing disabled.">
+            <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13">
+              <text x="14" y="22" fill="#0a0a0a" font-weight="650">my-agent/</text>
+
+              <text x="38" y="50" fill="#737373">|-</text><text x="64" y="50" fill="#0a0a0a">README.md</text>
+              <text x="300" y="50" fill="#737373">the variable checklist</text>
+
+              <text x="38" y="78" fill="#737373">|-</text><text x="64" y="78" fill="#0a0a0a">instructions.md</text>
+              <text x="38" y="106" fill="#737373">|-</text><text x="64" y="106" fill="#0a0a0a">SECURITY-NOTES.md</text>
+
+              <text x="38" y="134" fill="#737373">|-</text><text x="64" y="134" fill="#0a0a0a">skills/README.md</text>
+              <text x="38" y="162" fill="#737373">|-</text><text x="64" y="162" fill="#0a0a0a">knowledge/README.md</text>
+              <text x="300" y="162" fill="#737373">nothing connected yet</text>
+
+              <text x="38" y="190" fill="#737373">|-</text><text x="64" y="190" fill="#0a0a0a">tools/README.md</text>
+              <text x="300" y="190" fill="#737373">no write tools attached</text>
+
+              <text x="38" y="218" fill="#737373">|-</text><text x="64" y="218" fill="#0a0a0a">evals/baseline.yaml</text>
+
+              <text x="38" y="246" fill="#737373">\-</text><text x="64" y="246" fill="#0a0a0a">deployment/deployment.yaml</text>
+              <text x="300" y="246" fill="#737373">publishing: disabled</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>
+          Every file the template generates. The three annotated on the right are the ones a
+          reviewer asks about, and all three default to the safe answer before you have written
+          anything.
+        </figcaption>
+      </figure>
+
       <h3 class="sub-heading">And one thing you can actually run</h3>
       <p>
         The schemas are not decorative. The repository validates its own content against them
