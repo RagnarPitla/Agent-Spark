@@ -17,7 +17,9 @@ and the first one is the current blocker:
    Pages for this repository`. Making the repository public removes this blocker and exposes every
    tracked file and the full commit history, so it is a deliberate decision rather than a step.
 2. **Pages source must be set to "GitHub Actions"** under Settings -> Pages -> Source.
-   `.github/workflows/pages.yml` deploys from `main` only, and it has never run.
+   `.github/workflows/pages.yml` deploys from `main` only. It has already run and failed at
+   `actions/configure-pages`, with `Get Pages site failed. Please verify that the repository has
+   Pages enabled`, which is the same blocker as point 1 seen from inside CI.
 
 Until both hold, read the page locally with `python3 -m http.server 8765 --directory site` and open
 `http://127.0.0.1:8765/`, or open `site/index.html` directly in a browser.
