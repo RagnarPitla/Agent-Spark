@@ -103,7 +103,8 @@ spec:
   files:
     - source: ./README.md
       target: README.md
-      description: Variable checklist, what was generated, and how to use it without the CLI.
+      render: false
+      description: Variable checklist, what was generated, and how to use it without the CLI. Copied verbatim so the checklist still names the variables after generation.
     - source: ./instructions.md
       target: instructions.md
       description: Agent instructions covering role, scope, boundaries, and escalation.

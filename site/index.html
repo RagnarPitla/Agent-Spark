@@ -55,8 +55,9 @@
     <nav class="site-nav" aria-label="Primary">
       <ul>
         <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#inside">Inside the files</a></li>
         <li><a href="#status">Status</a></li>
-        <li><a href="#boundary">Boundary</a></li>
+        <li><a href="#gate">Tenant writes</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="https://github.com/RagnarPitla/Agent-Spark">GitHub</a></li>
         <li><a class="cta" href="#use-today">Use it today</a></li>
@@ -78,24 +79,21 @@
           folder, replace eight variables, own the result. No install, nothing to lock into.
         </p>
         <p class="sub-line">
-          <strong>Seven decisions stand between a customer and their first agent. Make them
-          once.</strong> Every new agent starts with the same assembly job: installer docs,
-          <code>pac</code> command references, folder conventions, sample agents, skill
-          formats, evaluation setup, governance guidance. That work gets repeated per
-          customer and produces a different answer every time. Agent Spark moves those
-          decisions into versioned content you can read, diff and own rather than advice you
-          have to reassemble from seven places.
-        </p>
-        <p class="sub-line">
-          This is a pre-alpha concept repository. The templates and skills are usable by
-          hand right now, with no tooling at all. The <code>agentspark</code> CLI that is
-          meant to wrap them does not exist yet, and this page is not going to imply
-          otherwise.
+          Pre-alpha. The templates and skills work by hand today, with no tooling at all. The
+          <code>agentspark</code> CLI meant to wrap them does not exist yet, and this page is
+          not going to imply otherwise.
         </p>
         <div class="cta-row">
-          <a class="btn primary" href="#use-today">Use a template today</a>
-          <a class="btn ghost" href="https://github.com/RagnarPitla/Agent-Spark">View the code on GitHub</a>
+          <a class="btn primary" href="https://github.com/RagnarPitla/Agent-Spark">View the repository on GitHub</a>
+          <a class="btn ghost" href="#use-today">Use a template by hand</a>
         </div>
+        <ul class="count-strip" aria-label="What is in the repository today">
+          <li><span class="count-n">1</span> template</li>
+          <li><span class="count-n">1</span> skill</li>
+          <li><span class="count-n">4</span> schemas</li>
+          <li><span class="count-n">31</span> evaluation cases</li>
+          <li><span class="count-n">0</span> CLI commands</li>
+        </ul>
         <p class="microcopy">
           MIT licensed<span class="sep">*</span>Unofficial community project<span class="sep">*</span>Not a Microsoft product
         </p>
@@ -487,7 +485,7 @@
 <pre><span class="prompt">$</span> npm run validate
 
 Agent Spark validator
-  files scanned:      72
+  files scanned:      74
   manifests validated: 6
   schema             pass
   references         pass
@@ -500,6 +498,122 @@ PASSED.</pre>
         That is the whole toolchain today: one validator, no install step beyond
         <code>git clone</code>, and no agent content generated for you yet.
       </p>
+    </div>
+  </section>
+
+  <!-- ======================================================== SPECIMENS -->
+  <section class="band" id="inside" aria-labelledby="inside-heading">
+    <div class="container">
+      <h2 id="inside-heading">What the files actually say</h2>
+      <p class="lede">
+        A file tree only tells you the names. These four are the files a reviewer opens,
+        quoted from the repository rather than described.
+      </p>
+
+      <div class="specimen-grid">
+
+        <div class="specimen">
+          <div class="specimen-head">
+            <span class="specimen-path">templates/knowledge-assistant/instructions.md</span>
+            <span class="specimen-tag">excerpt</span>
+          </div>
+<pre><span class="c">## Role</span>
+
+You are <span class="slot">{{displayName}}</span>, a knowledge assistant for
+<span class="slot">{{audience}}</span>. Your job:
+<span class="slot">{{businessTask}}</span>.
+
+You answer from <span class="slot">{{knowledgeSourceName}}</span> and from
+tool results available to you. Nothing else.
+
+<span class="c">## How to answer</span>
+
+Lead with the conclusion. Then the qualifier. Then the
+source.
+
+One to five sentences. Do not restate the question. Do
+not describe the search you performed.
+
+Never invent a reference to fill the slot.</pre>
+          <p class="specimen-note">
+            <strong>The shaded words are the eight variables.</strong> Everything around them is
+            the opinionated part: scope, answer shape, and a rule against fabricating a citation
+            to satisfy a format.
+          </p>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-head">
+            <span class="specimen-path">templates/knowledge-assistant/evals/baseline.yaml</span>
+            <span class="specimen-tag">verbatim</span>
+          </div>
+<pre><span class="c"># Deliberately unset. Adopt this suite, decide your
+# own threshold, and record who decided and why.
+# A pass rate that arrived with the template is a
+# number nobody agreed to.</span>
+  <span class="k">acceptance:</span>
+    <span class="k">minPassRate:</span> <span class="flag">null</span>
+    <span class="k">blockingCategories:</span>
+      - safety
+    <span class="k">setBy:</span> <span class="flag">null</span>
+    <span class="k">rationale:</span> <span class="flag">null</span></pre>
+          <p class="specimen-note">
+            <strong>The most argued-with line in the repository.</strong> A threshold that did not
+            come from your risk tolerance looks decided without ever having been decided.
+            <code>blockingCategories</code> is set, because safety is a categorical call rather
+            than a metric.
+          </p>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-head">
+            <span class="specimen-path">schemas/template.schema.json</span>
+            <span class="specimen-tag">verbatim</span>
+          </div>
+<pre><span class="k">"deployment"</span>: {
+  <span class="k">"properties"</span>: {
+    <span class="k">"publishByDefault"</span>: {
+      <span class="k">"const"</span>: <span class="flag">false</span>,
+      <span class="k">"description"</span>: "Templates may not ship
+        with publishing enabled. This is
+        deliberately not configurable."
+    }
+  }
+}</pre>
+          <p class="specimen-note">
+            <strong>Not a default. A constant.</strong> A template author who wants publishing on
+            does not have a setting to change, they have a schema violation, and CI fails the pull
+            request before a human has to argue about it.
+          </p>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-head">
+            <span class="specimen-path">templates/knowledge-assistant/deployment/deployment.yaml</span>
+            <span class="specimen-tag">verbatim</span>
+          </div>
+<pre><span class="k">target:</span>
+  <span class="c"># A committed environment id is an invitation to
+  # push to the wrong tenant from a cloned repo.</span>
+  <span class="k">environment:</span> <span class="flag">null</span>
+  <span class="k">environmentVariable:</span> AGENTSPARK_TARGET_ENVIRONMENT
+
+<span class="k">publish:</span> <span class="flag">false</span>
+
+<span class="k">gates:</span>
+  <span class="c"># Each gate names a human decision that
+  # generation cannot make.</span>
+  <span class="k">requireValidationBeforePush:</span> true
+  <span class="k">requireEvaluationRunBeforePublish:</span> true
+  <span class="k">requireExplicitConfirmationForPublish:</span> true</pre>
+          <p class="specimen-note">
+            <strong>No environment id ships in the file.</strong> Cloning the repository cannot
+            point your deployment at somebody else's tenant, because there is nothing there to
+            point with.
+          </p>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -538,6 +652,102 @@ PASSED.</pre>
   </section>
 
   <!-- ========================================================= BOUNDARY -->
+  <!-- ======================================================= GOVERNANCE -->
+  <section id="gate" aria-labelledby="gate-heading">
+    <div class="container">
+      <h2 id="gate-heading">The command that looks local</h2>
+      <p class="lede">
+        There is a command in the Power Platform CLI called <code>pac copilot init</code>. Add
+        <code>--environment</code> and, per the published reference, it does four things.
+      </p>
+
+      <div class="verb-row">
+        <div class="verb">
+          <span class="verb-name">scaffold</span>
+          <span class="verb-where">on your disk</span>
+          <p class="verb-detail">Writes the workspace folder.</p>
+        </div>
+        <div class="verb">
+          <span class="verb-name">pack</span>
+          <span class="verb-where">on your disk</span>
+          <p class="verb-detail">Builds the deployable artifact.</p>
+        </div>
+        <div class="verb tenant">
+          <span class="verb-name">import</span>
+          <span class="verb-where">your tenant</span>
+          <p class="verb-detail">Pushes that artifact into an environment.</p>
+        </div>
+        <div class="verb tenant">
+          <span class="verb-name">connect</span>
+          <span class="verb-where">your tenant</span>
+          <p class="verb-detail">Binds the agent to it.</p>
+        </div>
+      </div>
+
+      <p>
+        <code>init</code> is the most local-sounding word in developer tooling. It is what you
+        type when you expect a folder to appear. Half of what this one does is a tenant write,
+        and a wrapper that passes it through without showing you first is setting a trap.
+      </p>
+
+      <figure class="figure">
+        <div class="diagram">
+          <svg viewBox="0 0 880 240" role="img" aria-label="Every state-changing operation splits into two phases. Plan is pure: it reads project files, template files and cached capability information, and returns the files it would write, the exact commands it would run, the tenant writes involved and the permissions required. Plan writes nothing. Between plan and execute sits a review and confirmation gate that a human passes. Only after that gate does execute run, writing files and performing tenant writes, with a checkpoint saved between steps so a failure resumes rather than restarts. The dry-run flag is the plan phase on its own, not a separate code path.">
+            <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+
+              <!-- PLAN -->
+              <rect x="12" y="30" width="268" height="150" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+              <text x="32" y="60" font-size="15" font-weight="650" fill="#0a0a0a">plan</text>
+              <text x="32" y="82" font-size="12.5" fill="#737373">reads files and cached capability</text>
+              <text x="32" y="104" font-size="12.5" fill="#737373">returns: files to write, exact</text>
+              <text x="32" y="122" font-size="12.5" fill="#737373">commands, tenant writes, permissions</text>
+              <rect x="32" y="138" width="150" height="26" rx="13" fill="#f5f5f5" stroke="#e5e5e5"/>
+              <text x="46" y="156" font-size="12" font-weight="650" fill="#15803d">writes nothing</text>
+
+              <!-- arrow -->
+              <path d="M292 105 h44" stroke="#737373" stroke-width="1.5" fill="none"/>
+              <path d="M336 105 l-8 -5 v10 z" fill="#737373"/>
+
+              <!-- GATE -->
+              <rect x="348" y="30" width="184" height="150" rx="12" fill="#ffffff" stroke="#b45309" stroke-width="1.5"/>
+              <text x="368" y="60" font-size="15" font-weight="650" fill="#0a0a0a">you read it</text>
+              <text x="368" y="82" font-size="12.5" fill="#737373">a plan is serialisable, so it</text>
+              <text x="368" y="100" font-size="12.5" fill="#737373">can be exported, attached to</text>
+              <text x="368" y="118" font-size="12.5" fill="#737373">a change request, and diffed</text>
+              <rect x="368" y="136" width="126" height="26" rx="13" fill="#ffffff" stroke="#b45309"/>
+              <text x="382" y="154" font-size="12" font-weight="650" fill="#b45309">confirm, or stop</text>
+
+              <!-- arrow -->
+              <path d="M544 105 h44" stroke="#737373" stroke-width="1.5" fill="none"/>
+              <path d="M588 105 l-8 -5 v10 z" fill="#737373"/>
+
+              <!-- EXECUTE -->
+              <rect x="600" y="30" width="268" height="150" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+              <text x="620" y="60" font-size="15" font-weight="650" fill="#0a0a0a">execute</text>
+              <text x="620" y="82" font-size="12.5" fill="#737373">performs exactly the plan you read</text>
+              <text x="620" y="104" font-size="12.5" fill="#737373">checkpoints between steps, so a</text>
+              <text x="620" y="122" font-size="12.5" fill="#737373">failure resumes instead of restarting</text>
+              <rect x="620" y="138" width="176" height="26" rx="13" fill="#f5f5f5" stroke="#e5e5e5"/>
+              <text x="634" y="156" font-size="12" font-weight="650" fill="#b45309">the only phase that writes</text>
+
+              <text x="12" y="214" font-size="12.5" fill="#737373">--dry-run is plan without execute. Not a second code path, so it cannot drift out of sync with what execution does.</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>
+          The split from ADR-0003. A dry-run that lies is worse than no dry-run, so the dry-run
+          and the real run are the same code with the second half withheld.
+        </figcaption>
+      </figure>
+
+      <p class="microcopy">
+        Honest limit: the command surface above was verified on 24 August 2026 against Microsoft's
+        published <code>pac copilot</code> reference. Its behaviour against a live environment has
+        not been observed, and running it is the project's next task rather than a finished one.
+      </p>
+    </div>
+  </section>
+
   <section class="prose-section band" id="boundary" aria-labelledby="boundary-heading">
     <div class="container">
       <h2 id="boundary-heading">What this is not</h2>

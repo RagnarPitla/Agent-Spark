@@ -15,7 +15,8 @@
   },
   "scripts": {
     "validate": "node scripts/validate.mjs",
-    "test": "node scripts/validate.mjs"
+    "test": "node scripts/validate.mjs && node scripts/proof-run.mjs",
+    "proof": "node scripts/proof-run.mjs"
   },
   "dependencies": {
     "ajv": "^8.17.1",

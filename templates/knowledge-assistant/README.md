@@ -32,22 +32,23 @@ cp -r templates/knowledge-assistant ./my-agent
 cd my-agent
 ```
 
-Then replace every placeholder from the checklist above across `instructions.md`,
-`SECURITY-NOTES.md`, `deployment/deployment.yaml`, and the four `README.md` files. On macOS or
-Linux:
+Then replace every placeholder from the checklist above. This file is the one exception: it keeps
+its placeholders so the checklist above still reads as a checklist once you are done, so exclude it
+from the substitution. On macOS or Linux:
 
 ```bash
-grep -rl '{{' . | xargs sed -i '' 's/{{displayName}}/HR Policy Assistant/g'
+grep -rl '{{' . | grep -v '^\./README\.md$' \
+  | xargs sed -i '' 's/{{displayName}}/HR Policy Assistant/g'
 ```
 
-Repeat per variable, then confirm nothing is left:
+Repeat per variable, then confirm nothing is left outside this file:
 
 ```bash
-grep -rn '{{' . || echo "all variables replaced"
+grep -rn '{{' . | grep -v '^\./README\.md:' || echo "all variables replaced"
 ```
 
-Paste the resulting `instructions.md` into the Copilot Studio authoring surface, attach
-`{{knowledgeSourceName}}` as a knowledge source, and work through
+Paste the resulting `instructions.md` into the Copilot Studio authoring surface, attach the
+knowledge source you named in the checklist, and work through
 `knowledge/README.md` before letting anyone use it.
 
 ## What gets generated
@@ -79,8 +80,8 @@ Paste the resulting `instructions.md` into the Copilot Studio authoring surface,
    to every question, which is correct and useless.
 2. Run `evals/baseline.yaml`. Set `acceptance` yourself and record who set it and why.
 3. Read `SECURITY-NOTES.md` and confirm the reach section matches what you actually connected.
-4. Decide the escalation path is real. Test that the destination in `{{escalationPath}}` accepts
-   requests from `{{audience}}`.
+4. Decide the escalation path is real. Test that the destination you set for `escalationPath`
+   accepts requests from the audience you named.
 
 ## Provenance
 
