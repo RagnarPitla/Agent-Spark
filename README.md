@@ -8,21 +8,17 @@ A zero-friction agent factory for Microsoft Copilot Studio.
 > in CI on every push. Everything in `templates/` and `skills/` is usable by hand, with no tooling.
 > What does not exist: any executable named `agentspark`. See [Status](#status) for the exact line.
 
-The landing page source lives in [`site/`](site/) and is dependency-free static HTML. Its target
-address is `https://ragnarpitla.github.io/Agent-Spark/`, which is not live yet. Two things gate it,
-and the first one is the current blocker:
+The landing page source lives in [`site/`](site/) and is dependency-free static HTML. It is live at
+**<https://ragnarpitla.github.io/Agent-Spark/>**.
 
-1. **This repository is private.** GitHub Pages on a private repository requires a paid plan, so
-   enabling it on the current account fails with `422: Your current plan does not support GitHub
-   Pages for this repository`. Making the repository public removes this blocker and exposes every
-   tracked file and the full commit history, so it is a deliberate decision rather than a step.
-2. **Pages source must be set to "GitHub Actions"** under Settings -> Pages -> Source.
-   `.github/workflows/pages.yml` deploys from `main` only. It has already run and failed at
-   `actions/configure-pages`, with `Get Pages site failed. Please verify that the repository has
-   Pages enabled`, which is the same blocker as point 1 seen from inside CI.
+Two things had to hold, and both now do. The repository is public, which is what makes Pages
+available on this account, and it means every tracked file and the full commit history are readable
+by anyone. Pages source is set to "GitHub Actions", and `.github/workflows/pages.yml` deploys from
+`main` only, so nothing published from a branch reaches the live address.
 
-Until both hold, read the page locally with `python3 -m http.server 8765 --directory site` and open
-`http://127.0.0.1:8765/`, or open `site/index.html` directly in a browser.
+To read the page locally instead, run `python3 -m http.server 8765 --directory site` and open
+`http://127.0.0.1:8765/`, or open `site/index.html` directly in a browser. Validate any change to it
+with `python3 site/validate.py site` before pushing.
 
 ## What problem this solves
 
