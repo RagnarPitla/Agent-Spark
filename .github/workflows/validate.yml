@@ -1,0 +1,94 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: schema, references, secrets, ascii
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate repository
+        run: npm run validate
+
+      - name: Confirm no template variables leaked into samples
+        run: |
+          if grep -rn '{{' samples/ ; then
+            echo "::error::samples contain unreplaced template variables"
+            exit 1
+          fi
+          echo "samples are fully rendered"
+
+      - name: Confirm no template ships with publishing enabled
+        run: |
+          if grep -rn 'publishByDefault:\s*true' templates/ ; then
+            echo "::error::a template sets publishByDefault true, which the schema forbids"
+            exit 1
+          fi
+          if grep -rEn '^publish:\s*true' templates/ ; then
+            echo "::error::a template ships with publish enabled"
+            exit 1
+          fi
+          echo "publishing is disabled across all templates"
+
+  links:
+    name: markdown links
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check relative links resolve
+        run: |
+          # Reports every broken link rather than the first, because fixing
+          # links one CI run at a time is a waste of everyone's afternoon.
+          #
+          # Skipped by design:
+          #   - absolute URLs and mailto
+          #   - ../../issues, ../../discussions and friends. These are GitHub
+          #     web shorthand that resolve against the repository URL, not the
+          #     file tree. They are used instead of absolute URLs so they
+          #     survive a fork or a repository rename. See ADR-0004: the name
+          #     is not settled.
+          fail=0
+          while IFS= read -r file; do
+            dir=$(dirname "$file")
+            targets=$(grep -oE '\]\([^)#][^)]*\)' "$file" 2>/dev/null \
+              | sed -E 's/^\]\(//; s/\)$//; s/#.*$//' \
+              | grep -vE '^(https?:|mailto:|\$|#)' \
+              | grep -vE '^\.\./\.\./(issues|discussions|pulls|wiki|releases|actions|security)(/|$)' \
+              || true)
+            while IFS= read -r target; do
+              [ -z "$target" ] && continue
+              if [ ! -e "$dir/$target" ]; then
+                echo "::error file=$file::broken relative link: $target"
+                fail=1
+              fi
+            done <<< "$targets"
+          done < <(find . -name '*.md' -not -path './node_modules/*' -not -path './.git/*')
+          if [ "$fail" -ne 0 ]; then
+            echo "one or more relative links do not resolve"
+            exit 1
+          fi
+          echo "relative links resolve"

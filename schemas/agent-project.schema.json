@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentspark.dev/schemas/v1alpha1/agent-project.schema.json",
+  "title": "AgentProject",
+  "description": "Human-editable manifest for a generated Copilot Studio agent workspace. Field names are an Agent Spark product surface. Adapters map them onto supported platform assets.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": { "const": "agentspark.dev/v1alpha1" },
+    "kind": { "const": "AgentProject" },
+    "metadata": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Schema-safe project name. Lowercase, hyphen separated.",
+          "pattern": "^[a-z][a-z0-9-]{1,62}[a-z0-9]$"
+        },
+        "template": {
+          "type": "string",
+          "description": "Source template pinned as name@semver. Absent means the project was authored by hand.",
+          "pattern": "^[a-z][a-z0-9-]*@\\d+\\.\\d+\\.\\d+$"
+        },
+        "generatedBy": {
+          "type": "string",
+          "description": "Version of Agent Spark that produced this project.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+        },
+        "generatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["displayName", "businessTask", "mode", "instructions", "deployment", "governance"],
+      "additionalProperties": false,
+      "properties": {
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "businessTask": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500,
+          "description": "One sentence stating the outcome this agent produces for a named user."
+        },
+        "harness": {
+          "type": "string",
+          "enum": ["github-copilot", "standard", "copilot-chat"],
+          "description": "Target harness. Availability differs per harness and must be confirmed against current documentation."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["local-first", "environment-connected"],
+          "description": "local-first performs no tenant operations. environment-connected permits synchronization after explicit consent."
+        },
+        "instructions": { "$ref": "#/$defs/relativePath" },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/relativePath" },
+          "default": []
+        },
+        "knowledge": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": ["kind", "name"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["placeholder", "sharepoint", "dataverse", "file", "public-website", "custom"],
+                "description": "placeholder declares intent without connecting a source. Nothing is uploaded."
+              },
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string" },
+              "location": {
+                "type": "string",
+                "description": "Reference to the source. Use an environment variable placeholder rather than a literal tenant URL."
+              },
+              "dataClassification": { "$ref": "#/$defs/dataClassification" }
+            }
+          }
+        },
+        "tools": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": ["name", "access"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string" },
+              "access": {
+                "type": "string",
+                "enum": ["read", "write", "read-write"],
+                "description": "Declared effect of the tool. Anything other than read requires confirmation by default."
+              },
+              "requiresConfirmation": { "type": "boolean", "default": true },
+              "externalCalls": {
+                "type": "boolean",
+                "default": false,
+                "description": "True when the tool reaches a system outside the tenant."
+              }
+            }
+          }
+        },
+        "connectedAgents": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": ["name", "purpose"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "purpose": { "type": "string", "minLength": 1 },
+              "environment": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "evaluations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "suite": { "$ref": "#/$defs/relativePath" }
+          }
+        },
+        "deployment": {
+          "type": "object",
+          "required": ["publish"],
+          "additionalProperties": false,
+          "properties": {
+            "environment": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "Target environment identifier, or null for local-first. Prefer an environment variable placeholder over a literal environment id."
+            },
+            "solution": { "type": ["string", "null"], "default": null },
+            "publish": {
+              "type": "boolean",
+              "default": false,
+              "description": "Publishing is off by default. Turning it on does not remove the interactive confirmation gate."
+            }
+          }
+        },
+        "governance": {
+          "type": "object",
+          "required": ["dataClassification", "requiresHumanConfirmationForWrites"],
+          "additionalProperties": false,
+          "properties": {
+            "dataClassification": { "$ref": "#/$defs/dataClassification" },
+            "requiresHumanConfirmationForWrites": { "type": "boolean", "default": true },
+            "owner": { "type": "string", "description": "Person or team accountable for this agent in production." },
+            "reviewBy": { "type": "string", "format": "date" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "pattern": "^\\./[A-Za-z0-9._/-]+$",
+      "description": "Project-relative path. Must start with ./ and must not traverse upward.",
+      "not": { "pattern": "\\.\\." }
+    },
+    "dataClassification": {
+      "type": "string",
+      "enum": ["public", "internal", "confidential", "highly-confidential"]
+    }
+  }
+}

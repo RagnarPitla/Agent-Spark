@@ -1,0 +1,146 @@
+apiVersion: agentspark.dev/v1alpha1
+kind: Template
+metadata:
+  name: knowledge-assistant
+  version: 0.1.0
+  displayName: Knowledge Assistant
+  description: >-
+    An agent that answers questions from approved internal sources, cites the evidence, and reports
+    gaps instead of guessing. Read-only. Ships with no knowledge connected, on purpose.
+  owner: "@RagnarPitla"
+  maturity: experimental
+  license: MIT
+  provenance: >-
+    Original work. Instructions, skill, and evaluation cases written for this repository. No text
+    copied from Microsoft Learn, Microsoft internal material, or any customer deliverable.
+  reviewBy: "2026-11-23"
+  tags:
+    - knowledge
+    - read-only
+    - starter
+
+spec:
+  compatibility:
+    harness:
+      - github-copilot
+      - standard
+    pacCli: null
+    os:
+      - windows
+      - macos
+      - linux
+    # verified stays false until someone records an actual round trip against a real environment.
+    # Setting it true without a test run would make this manifest lie in a machine-readable way.
+    verified: false
+    verifiedOn: null
+
+  variables:
+    - name: agentName
+      prompt: What should the project folder and agent identifier be called?
+      type: string
+      required: true
+      pattern: "^[a-z][a-z0-9-]{1,62}[a-z0-9]$"
+      help: Lowercase and hyphens only. Example, contoso-hr-assistant.
+
+    - name: displayName
+      prompt: What should users see this agent called?
+      type: string
+      required: true
+      help: Example, HR Policy Assistant.
+
+    - name: businessTask
+      prompt: In one sentence, what does this agent do for its users?
+      type: text
+      required: true
+      help: >-
+        State the outcome, not the technology. "Answer HR policy questions from the employee
+        handbook" is usable. "Leverage AI for HR" is not.
+
+    - name: audience
+      prompt: Who asks this agent questions?
+      type: string
+      required: true
+      default: employees
+      help: Named group. The instructions change tone and scope based on this.
+
+    - name: knowledgeSourceName
+      prompt: What is the approved source of truth this agent may quote?
+      type: string
+      required: true
+      help: >-
+        Name it even if you have not connected it yet. The generated project creates a placeholder
+        and an onboarding checklist rather than uploading anything.
+
+    - name: escalationPath
+      prompt: Where should a user go when no approved source answers their question?
+      type: string
+      required: true
+      help: >-
+        A team, a channel, or a form. Without this the agent can identify a gap but cannot tell the
+        user what to do about it, which is half an answer.
+
+    - name: dataClassification
+      prompt: How is the underlying knowledge classified?
+      type: choice
+      required: true
+      default: internal
+      choices:
+        - public
+        - internal
+        - confidential
+        - highly-confidential
+
+    - name: environmentMode
+      prompt: Generate locally only, or connect to an environment now?
+      type: choice
+      required: true
+      default: local-first
+      choices:
+        - local-first
+        - environment-connected
+      help: local-first performs no tenant operations at all. You can connect later.
+
+  files:
+    - source: ./README.md
+      target: README.md
+      description: Variable checklist, what was generated, and how to use it without the CLI.
+    - source: ./instructions.md
+      target: instructions.md
+      description: Agent instructions covering role, scope, boundaries, and escalation.
+    - source: ./SECURITY-NOTES.md
+      target: SECURITY-NOTES.md
+      description: What this agent can reach, and what it must never do.
+    - source: ./skills/README.md
+      target: skills/README.md
+      description: Which skills are attached and how to add more.
+    - source: ./knowledge/README.md
+      target: knowledge/README.md
+      description: Knowledge onboarding checklist. No source is connected by generation.
+    - source: ./tools/README.md
+      target: tools/README.md
+      description: Documented empty state. This template attaches no write tools.
+    - source: ./evals/baseline.yaml
+      target: evals/baseline.yaml
+      render: false
+      description: Baseline evaluation suite. Copied verbatim so eval prompts are not templated.
+    - source: ./deployment/deployment.yaml
+      target: deployment/deployment.yaml
+      description: Deployment settings with publishing disabled.
+
+  skills:
+    - answer-with-sources@0.1.0
+
+  evaluations:
+    suite: ./evals/baseline.yaml
+
+  deployment:
+    publishByDefault: false
+
+  governance:
+    dataClassification: internal
+    riskProfile: read-only
+    requiresHumanConfirmationForWrites: true
+    notes: >-
+      This template attaches no write tools, so there is nothing for the confirmation gate to guard
+      yet. The flag is set true so that adding a write tool later does not silently inherit an
+      unguarded default.

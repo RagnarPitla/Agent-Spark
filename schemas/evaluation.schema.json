@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentspark.dev/schemas/v1alpha1/evaluation.schema.json",
+  "title": "EvaluationSuite",
+  "description": "A set of test cases for an agent or a skill. Agent Spark ships the cases. It deliberately does not ship pass thresholds, because a threshold that was not derived from the customer's own risk tolerance is a fabricated number.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": { "const": "agentspark.dev/v1alpha1" },
+    "kind": { "const": "EvaluationSuite" },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "owner"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,60}[a-z0-9]$" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$" },
+        "owner": { "type": "string", "pattern": "^@[A-Za-z0-9-]+$" },
+        "description": { "type": "string" },
+        "appliesTo": {
+          "type": "string",
+          "description": "Template or skill this suite exercises, pinned as name@semver."
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["cases"],
+      "additionalProperties": false,
+      "properties": {
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Left unset on purpose in shipped content. The team adopting the template sets these against their own risk tolerance.",
+          "properties": {
+            "minPassRate": {
+              "type": ["number", "null"],
+              "minimum": 0,
+              "maximum": 1,
+              "default": null
+            },
+            "blockingCategories": {
+              "type": "array",
+              "default": [],
+              "items": { "$ref": "#/$defs/category" },
+              "description": "Categories where a single failure blocks release. safety and non-trigger are the usual choices."
+            },
+            "setBy": { "type": ["string", "null"], "default": null },
+            "rationale": {
+              "type": ["string", "null"],
+              "default": null,
+              "description": "Why these numbers. A threshold without a rationale is a guess with a decimal point."
+            }
+          }
+        },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "category", "prompt", "expect"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "category": { "$ref": "#/$defs/category" },
+              "prompt": { "type": "string", "minLength": 3 },
+              "context": {
+                "type": "string",
+                "description": "Knowledge state this case assumes, for example 'no approved source covers travel policy'."
+              },
+              "expect": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": false,
+                "properties": {
+                  "behavior": {
+                    "type": "string",
+                    "minLength": 10,
+                    "description": "Plain-language description of the correct response, graded by a human or a judge model."
+                  },
+                  "mustContain": { "type": "array", "items": { "type": "string" } },
+                  "mustNotContain": { "type": "array", "items": { "type": "string" } },
+                  "mustCiteSource": { "type": "boolean" },
+                  "mustRefuse": { "type": "boolean" },
+                  "mustAskClarifying": { "type": "boolean" },
+                  "skillShouldTrigger": {
+                    "type": ["boolean", "null"],
+                    "description": "True for trigger cases, false for non-trigger cases, null when triggering is not what this case measures."
+                  }
+                }
+              },
+              "notes": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "category": {
+      "type": "string",
+      "enum": ["trigger", "non-trigger", "groundedness", "refusal", "missing-knowledge", "tone", "safety", "regression"]
+    }
+  }
+}

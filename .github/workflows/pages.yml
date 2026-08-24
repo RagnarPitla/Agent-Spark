@@ -1,0 +1,57 @@
+# Deploys the Agent Spark landing page to GitHub Pages.
+#
+# The site lives in site/, not docs/, because docs/ is reserved in this
+# repository for the PRD, architecture, security model, compatibility matrix
+# and ADRs. Deployment goes through upload-pages-artifact rather than the
+# "Pages from a branch" setting, so the directory name is a free choice and
+# nothing here competes with the documentation tree.
+#
+# ONE-TIME SETUP, which cannot be done from a workflow file: open
+# Settings -> Pages and set Source to "GitHub Actions". Until that is set this
+# workflow runs green and publishes nothing.
+#
+# The site is dependency-free static HTML, so there is no build step: the job
+# validates, then uploads site/ as-is.
+
+name: Deploy landing page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate the page before publishing it
+        run: python3 site/validate.py site
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

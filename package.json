@@ -1,0 +1,25 @@
+{
+  "name": "agent-spark",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "description": "A zero-friction agent factory for Microsoft Copilot Studio. Pre-alpha concept repository: templates, skills, and schemas, no CLI yet.",
+  "license": "MIT",
+  "author": "Ragnar Pitla",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RagnarPitla/Agent-Spark.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/validate.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  }
+}

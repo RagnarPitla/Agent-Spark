@@ -1,0 +1,525 @@
+<!doctype html>
+<!--
+  Agent Spark landing page.
+
+  Built with the ragnar-landing-page skill. Dependency-free static HTML:
+  no framework, no CDN, no hosted fonts, no build step. Relative paths only,
+  because the site is served from /Agent-Spark/.
+
+  Every claim on this page traces to a file in this repository. The status
+  section states what does not exist yet, deliberately and in the hero,
+  because a pre-alpha that oversells itself gets found out on first clone.
+
+  Validate before shipping:  python3 site/validate.py site
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Spark - a reviewed starting point for Copilot Studio agents</title>
+<meta name="description" content="Agent Spark turns the repeated setup decisions behind a Copilot Studio agent into versioned templates, skills and JSON Schemas you can read, diff and own. Pre-alpha: the templates work by hand today, the CLI is specification only.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agent Spark">
+<meta property="og:title" content="Agent Spark - a reviewed starting point for Copilot Studio agents">
+<meta property="og:description" content="Versioned templates, skills and JSON Schemas for Copilot Studio agents. Pre-alpha: templates work by hand today, the CLI is specification only.">
+<meta property="og:url" content="https://ragnarpitla.github.io/Agent-Spark/">
+<meta property="og:image" content="https://ragnarpitla.github.io/Agent-Spark/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agent Spark: a reviewed starting point for Copilot Studio agents">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agent Spark - a reviewed starting point for Copilot Studio agents">
+<meta name="twitter:description" content="Versioned templates, skills and JSON Schemas for Copilot Studio agents. Pre-alpha: templates work by hand today, the CLI is specification only.">
+<meta name="twitter:image" content="https://ragnarpitla.github.io/Agent-Spark/assets/og-card.png">
+<meta name="twitter:image:alt" content="Agent Spark: a reviewed starting point for Copilot Studio agents">
+
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="wordmark" href="#top">
+      <img class="wordmark-icon" src="./assets/favicon.svg" alt="" width="22" height="22">
+      <span class="mark">Agent Spark</span>
+      <span class="strap">a reviewed starting point for Copilot Studio</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#boundary">Boundary</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://github.com/RagnarPitla/Agent-Spark">GitHub</a></li>
+        <li><a class="cta" href="#use-today">Use it today</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============================================================= HERO -->
+  <section class="hero" id="top" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-copy">
+        <p class="hero-kicker badge"><img src="./assets/favicon.svg" alt="" width="12" height="12">Agent Spark</p>
+        <h1 id="hero-heading">Seven decisions stand between a customer and their first Copilot Studio agent. Make them once.</h1>
+        <p class="sub-line">
+          Every new agent starts with the same assembly job: installer docs, <code>pac</code>
+          command references, folder conventions, sample agents, skill formats, evaluation
+          setup, governance guidance. That work gets repeated per customer and produces a
+          different answer every time. <strong>Agent Spark moves those decisions into
+          versioned content you can read, diff and own</strong> rather than advice you have
+          to reassemble from seven places.
+        </p>
+        <p class="sub-line">
+          This is a pre-alpha concept repository. The templates and skills are usable by
+          hand right now, with no tooling at all. The <code>agentspark</code> CLI that is
+          meant to wrap them does not exist yet, and this page is not going to imply
+          otherwise.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#use-today">Use a template today</a>
+          <a class="btn ghost" href="https://github.com/RagnarPitla/Agent-Spark">View the code on GitHub</a>
+        </div>
+        <p class="microcopy">
+          MIT licensed<span class="sep">*</span>Unofficial community project<span class="sep">*</span>Not a Microsoft product
+        </p>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 520 360" role="img" aria-label="A contrast between two ways of starting a Copilot Studio agent. On the left, seven separate decision points scattered with no order, joined by a tangle of crossing lines, showing setup work reassembled from scratch for every customer. On the right, a single spark feeds one clean vertical spine through three ordered stages labelled template, skill and evals, showing the same decisions made once and reused. Every node is drawn as a small diamond rather than a circle.">
+
+          <!-- LEFT: the tangle. Nodes are real work, the crossing lines are the
+               problem, so the nodes stay at full contrast and the mesh sits at
+               --muted-foreground (4.74:1), well clear of the 3:1 graphic minimum. -->
+          <g stroke="#737373" stroke-width="1.5" fill="none" opacity="0.95">
+            <path d="M62 92 L198 232"/>
+            <path d="M150 72 L48 178"/>
+            <path d="M212 112 L105 292"/>
+            <path d="M128 165 L150 72"/>
+            <path d="M48 178 L212 112"/>
+            <path d="M105 292 L198 232"/>
+            <path d="M62 92 L128 165"/>
+            <path d="M150 72 L105 292"/>
+            <path d="M128 165 L198 232"/>
+          </g>
+          <polygon points="62,85 69,92 62,99 55,92" fill="#0a0a0a"/>
+          <polygon points="150,65 157,72 150,79 143,72" fill="#0a0a0a"/>
+          <polygon points="212,105 219,112 212,119 205,112" fill="#0a0a0a"/>
+          <polygon points="48,171 55,178 48,185 41,178" fill="#0a0a0a"/>
+          <polygon points="128,158 135,165 128,172 121,165" fill="#0a0a0a"/>
+          <polygon points="198,225 205,232 198,239 191,232" fill="#0a0a0a"/>
+          <polygon points="105,285 112,292 105,299 98,292" fill="#0a0a0a"/>
+          <text x="128" y="32" text-anchor="middle" fill="#737373" font-size="13" font-weight="700" letter-spacing="0.06em">TODAY</text>
+          <text x="128" y="332" text-anchor="middle" fill="#737373" font-size="12">reassembled per customer</text>
+
+          <line x1="258" y1="22" x2="258" y2="312" stroke="#e5e5e5" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+          <!-- RIGHT: one spine. Same node weight as the left, on purpose:
+               the work does not disappear, it stops being reinvented. -->
+          <path d="M395 94 L395 280" stroke="#0a0a0a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <polygon points="395,62 400,73 411,78 400,83 395,94 390,83 379,78 390,73" fill="#0a0a0a"/>
+          <polygon points="395,133 402,140 395,147 388,140" fill="#0a0a0a"/>
+          <polygon points="395,203 402,210 395,217 388,210" fill="#0a0a0a"/>
+          <polygon points="395,273 402,280 395,287 388,280" fill="#0a0a0a"/>
+          <g stroke="#e5e5e5" stroke-width="2" fill="none">
+            <path d="M395 140 L452 140"/>
+            <path d="M395 210 L452 210"/>
+            <path d="M395 280 L452 280"/>
+          </g>
+          <text x="462" y="144" fill="#737373" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">template</text>
+          <text x="462" y="214" fill="#737373" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">skill</text>
+          <text x="462" y="284" fill="#737373" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">evals</text>
+          <text x="395" y="32" text-anchor="middle" fill="#737373" font-size="13" font-weight="700" letter-spacing="0.06em">AGENT SPARK</text>
+          <text x="395" y="332" text-anchor="middle" fill="#737373" font-size="12">decided once, versioned, reused</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== PROBLEM -->
+  <section class="prose-section" id="problem" aria-labelledby="problem-heading">
+    <div class="container">
+      <h2 id="problem-heading">You have set this up before</h2>
+      <p>
+        A customer wants an agent that answers questions from their handbook. Straightforward
+        enough. So you open the installer docs, then the <code>pac</code> command reference,
+        then a sample agent someone shared, then whatever folder layout the last project used
+        because nobody wrote one down. Somewhere in there you decide how instructions are
+        structured, what a skill file looks like, whether evaluations exist at all, and who
+        signs off before it is published.
+      </p>
+      <p>
+        None of those decisions are hard. All of them are load-bearing. And you will make
+        every one of them again for the next customer, slightly differently, because there
+        was nothing to copy from except your memory of last time.
+      </p>
+      <p class="muted">
+        That is not a documentation problem, and more documentation will not fix it. The
+        decisions were never written down in a form a machine could check or a reviewer could
+        diff, so each project quietly re-litigates them and the results drift apart.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================================================== HOW IT WORKS -->
+  <section id="how-it-works" aria-labelledby="how-heading">
+    <div class="container">
+      <h2 id="how-heading">How it works</h2>
+      <p class="lede">
+        Three steps, all of which work today by hand. There is no <code>agentspark</code> CLI
+        to install, because it does not exist yet.
+      </p>
+      <ol class="steps steps-3">
+        <li>
+          <h3>Copy a scenario template</h3>
+          <p>
+            <code>templates/knowledge-assistant</code> is a plain folder of Markdown and
+            YAML: eight files covering instructions, security notes, a knowledge onboarding
+            checklist, a baseline evaluation suite and deployment settings.
+          </p>
+        </li>
+        <li>
+          <h3>Answer the variable checklist</h3>
+          <p>
+            <code>template.yaml</code> names eight variables and what each one is for, from
+            the agent identifier down to the escalation path a user gets when no approved
+            source answers their question. The checklist is repeated at the top of the
+            template README.
+          </p>
+        </li>
+        <li>
+          <h3>Author the result in Copilot Studio</h3>
+          <p>
+            You end up with instructions, an attached skill, a knowledge contract, baseline
+            evaluations and a security note, before writing a line of agent content.
+            <code>deployment.yaml</code> ships with publishing disabled.
+          </p>
+        </li>
+      </ol>
+      <p class="steps-loop">
+        <svg class="loop-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 4a8 8 0 1 1-7.5 5.2 1 1 0 1 1 1.87.7A6 6 0 1 0 12 6V2.7a.3.3 0 0 0-.5-.22L8 5.5l3.5 3a.3.3 0 0 0 .5-.22V6a6 6 0 0 1 0 0V4Z"/></svg>
+        What the CLI is meant to add later is the wizard around step two, not a different step two.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================= JOBS -->
+  <section id="jobs" aria-labelledby="jobs-heading">
+    <div class="container">
+      <h2 id="jobs-heading">Three kinds of content, one contract</h2>
+      <p class="lede">
+        Templates, skills and schemas are not three separate offerings. The schemas are what
+        make the other two reviewable, which is the entire point: content nobody can validate
+        is just a folder of opinions.
+      </p>
+      <ul class="jobs">
+        <li>
+          <span class="job-kicker">Templates</span>
+          <h3>A whole scenario, not a snippet</h3>
+          <p>
+            <code>knowledge-assistant@0.1.0</code> generates eight files and declares its own
+            compatibility, governance profile and risk posture in the manifest. It attaches
+            no write tools, so the read-only claim is structural rather than a promise in a
+            README.
+          </p>
+        </li>
+        <li>
+          <span class="job-kicker">Skills</span>
+          <h3>Behaviour with its failure modes written down</h3>
+          <p>
+            <code>answer-with-sources@0.1.0</code> ships seven guardrails, an explicit
+            do-not-use-when list, a failure-behaviour table, and positive, negative and
+            ambiguous worked examples. Most skill files describe the happy path and stop.
+          </p>
+        </li>
+        <li>
+          <span class="job-kicker">Schemas</span>
+          <h3>The part a machine can check</h3>
+          <p>
+            Four JSON Schemas at <code>agentspark.dev/v1alpha1</code> cover the agent project,
+            template, skill and evaluation manifests. A manifest that claims a file must
+            actually have one, and a compatibility flag that says verified must have a
+            recorded round trip behind it.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =========================================================== STATUS -->
+  <section class="band" id="status" aria-labelledby="status-heading">
+    <div class="container">
+      <h2 id="status-heading">What exists, and what does not</h2>
+      <p class="lede">
+        The uncomfortable section, placed before the pitch rather than after it. Dashed rows
+        are specifications with no implementation behind them.
+      </p>
+      <div class="proof-grid">
+        <div class="demo-panel">
+          <p class="demo-label">Repository status</p>
+          <p class="demo-intro">Read straight from the tree at <strong>main</strong>.</p>
+          <ul class="spec-list">
+            <li class="is-main">
+              <span class="key">templates/</span>
+              <span class="name">knowledge-assistant<span class="tag">0.1.0</span></span>
+              <span class="meta">usable by hand</span>
+            </li>
+            <li class="is-main">
+              <span class="key">skills/</span>
+              <span class="name">answer-with-sources<span class="tag">0.1.0</span></span>
+              <span class="meta">usable by hand</span>
+            </li>
+            <li class="is-main">
+              <span class="key">schemas/</span>
+              <span class="name">project, template, skill, evaluation</span>
+              <span class="meta">4 schemas</span>
+            </li>
+            <li class="is-main">
+              <span class="key">samples/</span>
+              <span class="name">contoso-knowledge-assistant</span>
+              <span class="meta">worked example</span>
+            </li>
+            <li class="is-main">
+              <span class="key">scripts/</span>
+              <span class="name">validate.mjs<span class="tag">runs</span></span>
+              <span class="meta">npm run validate</span>
+            </li>
+            <li class="is-pending">
+              <span class="key">cli/</span>
+              <span class="name">command surface only, nothing to run</span>
+              <span class="meta">spec only</span>
+            </li>
+            <li class="is-pending">
+              <span class="key">packages/</span>
+              <span class="name">package contracts, no implementation</span>
+              <span class="meta">spec only</span>
+            </li>
+          </ul>
+          <ul class="status-legend" aria-label="Row meanings">
+            <li><span class="swatch" aria-hidden="true"></span>Solid border: works today</li>
+            <li><span class="swatch swatch-spec" aria-hidden="true"></span>Dashed border: specification</li>
+          </ul>
+        </div>
+        <div class="proof-copy">
+          <p>
+            Treat every <code>agentspark</code> command you see in this repository as a
+            specification, not as software you can run. The command surface lives in the PRD
+            because writing the interface down first is how you find out the interface is
+            wrong, but nothing has been built against it and it has not been validated
+            against an installed <code>pac</code> CLI.
+          </p>
+          <div class="stat-row">
+            <div class="stat"><b>4</b><span>JSON Schemas, versioned independently</span></div>
+            <div class="stat"><b>6</b><span>manifests the validator checks on every push</span></div>
+            <div class="stat"><b>0</b><span>CLI commands implemented</span></div>
+          </div>
+          <p class="muted">
+            That last number is the honest one, and it is on the page for the same reason the
+            template manifest carries <code>verified: false</code>: a status that flatters the
+            project is a status nobody can use. It changes when there is a real round trip
+            against a real environment to point at, and not before.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== USE TODAY -->
+  <section id="use-today" aria-labelledby="use-today-heading">
+    <div class="container">
+      <h2 id="use-today-heading">Use it today, without the CLI</h2>
+      <p class="lede">
+        The Knowledge Assistant template is a plain folder. Copying it is the whole install
+        step.
+      </p>
+      <div class="terminal">
+<pre><span class="prompt">$</span> git clone https://github.com/RagnarPitla/Agent-Spark
+<span class="prompt">$</span> cp -r Agent-Spark/templates/knowledge-assistant ./my-agent
+<span class="prompt">$</span> $EDITOR my-agent/README.md
+<span class="comment"># the variable checklist is at the top of that file</span></pre>
+      </div>
+      <p>
+        Replace the eight variables, then author the result in Copilot Studio by hand. You are
+        not locked in to anything: the output is Markdown and YAML you now own, in a folder,
+        with no tool required to open it and none required to leave.
+      </p>
+      <h3 class="sub-heading">And one thing you can actually run</h3>
+      <p>
+        The schemas are not decorative. The repository validates its own content against them
+        on every push, and the same check runs locally against whatever you have edited.
+      </p>
+      <div class="terminal">
+<pre><span class="prompt">$</span> npm run validate
+
+Agent Spark validator
+  files scanned:      61
+  manifests validated: 6
+  schema             pass
+  references         pass
+  secrets            pass
+  ascii              pass
+
+PASSED.</pre>
+      </div>
+      <p class="microcopy">
+        That is the whole toolchain today: one validator, no install step beyond
+        <code>git clone</code>, and no agent content generated for you yet.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================= COMPARISON -->
+  <section id="different" aria-labelledby="different-heading">
+    <div class="container">
+      <h2 id="different-heading">Why not just start from a sample</h2>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>Compared with an official sample agent</h3>
+          <p>
+            Samples are built to demonstrate a capability, and they are good at that. What
+            they deliberately leave out is everything around the capability: no evaluation
+            suite, no security note, no governance profile, no statement of what the agent
+            must never do. Those omissions are correct in a sample and expensive in a
+            starting point, because they are exactly the parts a reviewer will ask about.
+          </p>
+        </div>
+        <div class="compare-card">
+          <h3>Compared with your own internal starter</h3>
+          <p>
+            Most teams doing this at volume already have one, and it usually works. It also
+            usually lives in one person's head or one team's drive, carries no version, and
+            has no way to tell you it has drifted from the platform. A starter with a schema
+            behind it can fail a build. A starter in a shared folder can only disappoint you
+            later.
+          </p>
+        </div>
+      </div>
+      <p class="compare-close">
+        <strong>The unit of reuse here is a reviewed decision, not a code sample</strong>, which
+        is why every template and skill carries an owner, a semantic version, a licence, a
+        provenance statement and a review-by date.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================= BOUNDARY -->
+  <section class="prose-section band" id="boundary" aria-labelledby="boundary-heading">
+    <div class="container">
+      <h2 id="boundary-heading">What this is not</h2>
+      <p>
+        Agent Spark is an unofficial community project. It is not a Microsoft product, it is
+        not covered by Microsoft Support, and it does not reimplement any part of the Copilot
+        Studio runtime, harness or orchestration engine. It calls public, documented
+        interfaces and nothing else.
+      </p>
+      <table class="data-table">
+        <caption>Where the line sits, from the repository README.</caption>
+        <thead>
+          <tr><th>Agent Spark owns</th><th>Copilot Studio owns</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Developer experience, wizard, prompts</td><td>Runtime, harness, orchestration</td></tr>
+          <tr><td>Generated files on your disk</td><td>Environment state and agent state</td></tr>
+          <tr><td>Plan, dry-run, validation, reports</td><td>Governance enforcement, DLP, licensing</td></tr>
+          <tr><td>Template and skill catalog</td><td>Supported lifecycle behaviour of <code>pac copilot</code></td></tr>
+        </tbody>
+      </table>
+      <p class="muted">
+        It never bypasses tenant administration, environment policy, DLP, authentication,
+        licensing, consent or approval. Where a policy blocks an action, Agent Spark reports
+        it and stops. Routing around a control that an administrator deliberately configured
+        is not a feature, and a tool that offers it is one incident away from being banned
+        outright.
+      </p>
+      <ul class="assurance-list">
+        <li>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Zm0 2.2 6 2.2v4.6c0 4-2.6 6.9-6 8-3.4-1.1-6-4-6-8V6.4l6-2.2Z"/></svg>
+          Publishing is disabled by default in generated deployment settings
+        </li>
+        <li>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Zm0 2.2 6 2.2v4.6c0 4-2.6 6.9-6 8-3.4-1.1-6-4-6-8V6.4l6-2.2Z"/></svg>
+          The starter template attaches no write tools at all
+        </li>
+        <li>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Zm0 2.2 6 2.2v4.6c0 4-2.6 6.9-6 8-3.4-1.1-6-4-6-8V6.4l6-2.2Z"/></svg>
+          Generation connects no knowledge source and uploads nothing
+        </li>
+        <li>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Zm0 2.2 6 2.2v4.6c0 4-2.6 6.9-6 8-3.4-1.1-6-4-6-8V6.4l6-2.2Z"/></svg>
+          Every template and skill carries provenance and a review-by date
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================== FAQ -->
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="container">
+      <h2 id="faq-heading">Frequently asked questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Can I install it?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>Not as an agent generator. There is no published package and no executable named <code>agentspark</code>. What works today is <code>git clone</code> plus copying a template folder, which needs no installation because it is Markdown and YAML, and <code>npm run validate</code>, which checks that content against the schemas.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Is this a Microsoft product?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>No. It is an unofficial community project under the MIT licence, not covered by Microsoft Support, and it does not speak for Microsoft. Views in this repository are the author's own.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Will it change things in my tenant?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>Nothing here can, because nothing here executes. The template's own default is <code>local-first</code>, which performs no tenant operations, and the deployment settings it generates have publishing disabled. When a CLI does exist, the boundary above is the contract it has to hold to.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Why publish a repository with no working tool in it?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>Because the content is the hard part and it is already useful. A reviewed template with evaluations and a security note saves real time whether or not a wizard wraps it. Building the wrapper first would have meant guessing at what it should generate.</p><p>It also makes the specification reviewable before anyone commits engineering time to it, which is cheaper than discovering the command surface is wrong after it is built.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Is "Agent Spark" the final name?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>No, it is a working name. It has not cleared trademark review or npm name availability. ADR-0004 in the repository records the alternatives that were considered and why each was rejected.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I contribute a template or a skill?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>Yes, and the bar is written down in CONTRIBUTING.md rather than left to a reviewer's mood. Every template and skill needs a named owner, a semantic version, a licence and provenance statement, worked examples and evaluations. Contributions that fail schema validation, contain a likely secret, or use non-ASCII typographic characters in Markdown are rejected automatically.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How is this different from just writing good documentation?<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg></summary>
+          <div class="faq-answer"><p>Documentation tells you what to do and then cannot tell whether you did it. A manifest with a schema behind it can fail a build when a referenced file is missing, when a compatibility flag claims a verification that never happened, or when a template drifts from the contract it declared.</p><p>The prose still matters, and there is plenty of it here. The difference is that the parts a machine can check are checked by a machine, so review effort goes to the parts only a human can judge.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://github.com/RagnarPitla/Agent-Spark">GitHub</a>
+      <a href="https://github.com/RagnarPitla/Agent-Spark/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/RagnarPitla/Agent-Spark/blob/main/SECURITY.md">Security</a>
+      <a href="https://github.com/RagnarPitla/Agent-Spark/blob/main/CHANGELOG.md">Changelog</a>
+    </div>
+    <p class="footer-credits">
+      Agent Spark is developed in the open at
+      <a href="https://github.com/RagnarPitla/Agent-Spark">RagnarPitla/Agent-Spark</a>,
+      licensed <a href="https://github.com/RagnarPitla/Agent-Spark/blob/main/LICENSE">MIT</a>.
+      It is an unofficial community project and is not affiliated with, endorsed by, or
+      supported by Microsoft. Copilot Studio, Dynamics 365, Power Platform and the
+      <code>pac</code> CLI are products of Microsoft Corporation.
+    </p>
+    <p class="footer-note">(c) Ragnar Pitla. Code MIT licensed. Views expressed are my own and do not represent Microsoft's official position.</p>
+  </div>
+</footer>
+
+</body>
+</html>

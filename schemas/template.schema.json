@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentspark.dev/schemas/v1alpha1/template.schema.json",
+  "title": "Template",
+  "description": "Manifest for a versioned Agent Spark scenario template.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": { "const": "agentspark.dev/v1alpha1" },
+    "kind": { "const": "Template" },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "displayName", "description", "owner", "maturity", "license", "provenance", "reviewBy"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,48}[a-z0-9]$" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "description": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 400,
+          "description": "What this template produces and for whom. Not a marketing sentence."
+        },
+        "owner": {
+          "type": "string",
+          "pattern": "^@[A-Za-z0-9-]+$",
+          "description": "GitHub handle that answers issues about this template."
+        },
+        "maturity": {
+          "type": "string",
+          "enum": ["experimental", "beta", "stable", "deprecated"],
+          "description": "New templates start at experimental. Promotion requires evidence of real use."
+        },
+        "license": { "type": "string", "minLength": 1 },
+        "provenance": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Where this content came from. State 'Original work' or give a source link plus a license that permits redistribution."
+        },
+        "reviewBy": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the owner will re-verify this template against current platform behavior."
+        },
+        "tags": { "type": "array", "items": { "type": "string" }, "default": [] }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["compatibility", "variables", "files", "governance"],
+      "additionalProperties": false,
+      "properties": {
+        "compatibility": {
+          "type": "object",
+          "required": ["harness", "os", "verified"],
+          "additionalProperties": false,
+          "properties": {
+            "harness": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "enum": ["github-copilot", "standard", "copilot-chat"] }
+            },
+            "pacCli": {
+              "type": ["string", "null"],
+              "description": "Semver range of Power Platform CLI versions this template was checked against, or null when the template needs no CLI."
+            },
+            "os": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "enum": ["windows", "macos", "linux"] }
+            },
+            "verified": {
+              "type": "boolean",
+              "description": "False means the compatibility claims above are intent, not test results. Do not set true without a recorded test run."
+            },
+            "verifiedOn": { "type": ["string", "null"], "format": "date" }
+          }
+        },
+        "variables": {
+          "type": "array",
+          "description": "Values the user supplies. Every variable referenced in template files must appear here.",
+          "items": {
+            "type": "object",
+            "required": ["name", "prompt", "type", "required"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$" },
+              "prompt": {
+                "type": "string",
+                "minLength": 5,
+                "description": "Plain-language question shown in the wizard. Not a field label."
+              },
+              "type": { "type": "string", "enum": ["string", "text", "boolean", "number", "choice", "list"] },
+              "required": { "type": "boolean" },
+              "default": {},
+              "choices": { "type": "array", "items": { "type": "string" } },
+              "pattern": { "type": "string", "description": "Regular expression applied to string input." },
+              "help": { "type": "string" },
+              "sensitive": {
+                "type": "boolean",
+                "default": false,
+                "description": "Sensitive values are never written to generated files, reports, or logs."
+              }
+            }
+          }
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Every file this template emits. The validator checks each source path exists.",
+          "items": {
+            "type": "object",
+            "required": ["source", "target"],
+            "additionalProperties": false,
+            "properties": {
+              "source": { "$ref": "#/$defs/relativePath" },
+              "target": { "type": "string", "pattern": "^[A-Za-z0-9._/{}-]+$", "not": { "pattern": "\\.\\." } },
+              "render": {
+                "type": "boolean",
+                "default": true,
+                "description": "False copies the file verbatim without variable substitution."
+              },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "skills": {
+          "type": "array",
+          "default": [],
+          "description": "Skills this template attaches, pinned as name@semver.",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*@\\d+\\.\\d+\\.\\d+$" }
+        },
+        "evaluations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "suite": { "$ref": "#/$defs/relativePath" } }
+        },
+        "deployment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "publishByDefault": {
+              "const": false,
+              "description": "Templates may not ship with publishing enabled. This is deliberately not configurable."
+            }
+          }
+        },
+        "governance": {
+          "type": "object",
+          "required": ["dataClassification", "riskProfile", "requiresHumanConfirmationForWrites"],
+          "additionalProperties": false,
+          "properties": {
+            "dataClassification": { "type": "string", "enum": ["public", "internal", "confidential", "highly-confidential"] },
+            "riskProfile": {
+              "type": "string",
+              "enum": ["read-only", "low-write", "high-write"],
+              "description": "read-only agents cannot mutate business data. high-write requires a named approver before production use."
+            },
+            "requiresHumanConfirmationForWrites": { "type": "boolean" },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "pattern": "^\\./[A-Za-z0-9._/-]+$",
+      "not": { "pattern": "\\.\\." }
+    }
+  }
+}

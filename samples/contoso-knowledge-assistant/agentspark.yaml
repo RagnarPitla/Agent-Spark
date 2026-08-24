@@ -1,0 +1,48 @@
+apiVersion: agentspark.dev/v1alpha1
+kind: AgentProject
+
+metadata:
+  name: contoso-knowledge-assistant
+  template: knowledge-assistant@0.1.0
+  generatedBy: 0.1.0-alpha.1
+  generatedAt: "2026-08-24T14:00:00Z"
+
+spec:
+  displayName: Contoso HR Policy Assistant
+  businessTask: Answer employee questions about HR policy from the Contoso Employee Handbook.
+  harness: github-copilot
+  mode: local-first
+
+  instructions: ./instructions.md
+
+  skills:
+    - ./skills/answer-with-sources
+
+  knowledge:
+    - kind: placeholder
+      name: Contoso Employee Handbook 2026
+      description: >-
+        Approved source of truth for HR policy. Not connected. Connecting it is a permission and
+        DLP decision, so a human makes it after the onboarding checklist.
+      location: ${CONTOSO_HANDBOOK_SITE_URL}
+      dataClassification: internal
+
+  # No tools. This project is read-only by design. Attaching a write tool changes the risk profile
+  # and requires the steps in the template's tools/README.md.
+  tools: []
+
+  connectedAgents: []
+
+  evaluations:
+    suite: ./evals/baseline.yaml
+
+  deployment:
+    environment: null
+    solution: null
+    publish: false
+
+  governance:
+    dataClassification: internal
+    requiresHumanConfirmationForWrites: true
+    owner: Contoso People Operations
+    reviewBy: "2026-11-24"

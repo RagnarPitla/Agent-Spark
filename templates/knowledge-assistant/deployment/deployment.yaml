@@ -1,0 +1,51 @@
+# Deployment settings for {{displayName}}
+#
+# Generated with publishing disabled and no environment bound. Both are deliberate.
+# Turning publishing on does not remove the interactive confirmation gate.
+
+apiVersion: agentspark.dev/v1alpha1
+kind: DeploymentSettings
+
+mode: "{{environmentMode}}"
+
+target:
+  # Prefer an environment variable placeholder over a literal environment id. A committed
+  # environment id is an invitation to push to the wrong tenant from a cloned repository.
+  environment: null
+  environmentVariable: AGENTSPARK_TARGET_ENVIRONMENT
+  solution: null
+
+publish: false
+
+gates:
+  # Each gate names a human decision that generation cannot make.
+  requireValidationBeforePush: true
+  requireEvaluationRunBeforePublish: true
+  requireExplicitConfirmationForPublish: true
+  requireExplicitConfirmationForDelete: true
+  showTargetIdentityBeforeWrite: true
+
+# Preflight checks reported before any environment operation. Agent Spark reports failures.
+# It does not resolve them and does not route around them.
+preflight:
+  - authenticated
+  - environment-reachable
+  - user-has-required-privileges
+  - dlp-policy-permits-connectors
+  - licensing-permits-target-harness
+  - no-uncommitted-local-changes
+  - no-secrets-detected-in-workspace
+
+# Sequence once the CLI exists. Every step is a specification today, not working software.
+lifecycle:
+  pull: pull before edit, so remote changes are never overwritten silently
+  validate: schema, references, secrets, naming, environment readiness
+  plan: show files, commands, writes, and permissions before executing anything
+  push: send validated changes, surface conflicts rather than merging them silently
+  pack: package the workspace only after validation passes
+  publish: blocked until the gates above are satisfied and a human confirms
+
+notes: >-
+  Set environment through AGENTSPARK_TARGET_ENVIRONMENT rather than editing this file, so the
+  target is not committed. If you must commit a target, use a non-production environment and say
+  so in the pull request.

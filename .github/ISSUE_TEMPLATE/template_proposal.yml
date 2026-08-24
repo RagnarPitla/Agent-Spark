@@ -1,0 +1,90 @@
+name: Template or skill proposal
+description: Propose a new scenario template or reusable skill
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Templates and skills carry an ongoing cost: an owner, a review date, and evaluations that
+        someone reruns when the platform moves. Proposals are accepted based on evidence of need,
+        not on how plausible the scenario sounds.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Template
+        - Skill
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Proposed name
+      placeholder: case-triage
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What outcome does it produce, and for whom
+      description: State the job it does. Not the technology it uses.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence of need
+      description: >-
+        Who asked for this, and how many times. A team that rebuilt this by hand three times is
+        evidence. "It would be useful" is not.
+    validations:
+      required: true
+
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: When it must NOT be used
+      description: >-
+        For a skill, the doNotUseWhen conditions. For a template, the scenarios it will be
+        mistaken for and should not be used for. This field prevents more failures than the
+        outcome field does.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk profile
+      description: Anything beyond read-only needs a named approver before production use.
+      options:
+        - read-only
+        - low-write
+        - high-write
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Who will own it
+      description: The handle that answers issues about it and re-verifies it at the review date.
+      placeholder: "@your-handle"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirms
+    attributes:
+      label: Confirmations
+      options:
+        - label: This is original work, or from a source whose license permits redistribution
+          required: true
+        - label: It contains no internal, confidential, or customer material
+          required: true
+        - label: I will supply positive, negative, and ambiguous examples plus evaluation cases
+          required: true

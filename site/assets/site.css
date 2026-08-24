@@ -1,0 +1,549 @@
+/**
+ * Product landing page design system.
+ *
+ * Light, neutral-greyscale theme built on the shadcn/ui "neutral" palette,
+ * matching https://rbuild.ai. Generalised from the Ramify landing page
+ * (github.com/RagnarPitla/chess-local-learning) so a new product can reuse
+ * it verbatim: no product-specific selectors remain.
+ *
+ * Three rules this file exists to enforce:
+ *
+ * 1. No build step, no imports, no external assets, no hosted fonts. Drop
+ *    this file next to index.html and it works. A landing page that needs
+ *    npm install is a landing page that rots.
+ * 2. Monochrome is the point. The only colour outside the neutral scale is
+ *    the --status-* set, reserved for real product data (a pass/fail dot, a
+ *    severity label). Never use it for decoration. The moment a landing page
+ *    reaches for a gradient it stops looking like an engineering tool.
+ * 3. Accessibility is not a pass at the end. Focus outlines are never
+ *    removed, contrast pairs are verified below and recorded in comments,
+ *    and motion respects prefers-reduced-motion.
+ *
+ * Contrast, verified against #ffffff:
+ *   --foreground        #0a0a0a  19.80:1  (AAA)
+ *   --muted-foreground  #737373   4.74:1  (AA, body text and labels)
+ *   --border            #e5e5e5   1.27:1  (decorative only, never text)
+ * Reversed, verified against --primary #171717:
+ *   --primary-foreground #fafafa 16.79:1  (AAA)
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------------------------------------------------------- surfaces */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+
+  /* ----------------------------------------------------------- actions */
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+
+  /* ------------------------------------------------------ neutral fill */
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+
+  /* --------------------------------------------------------- structure */
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-full: 999px;
+
+  /* ------------------------------------------------------------ status
+   * The one exception to the neutral scale. Reserved for small dots and
+   * labels on real product data only, never decoration. Each clears WCAG
+   * AA (4.5:1) on white so 13-15px label text is legible on its own.
+   * Verified: ok 5.02:1, warn 5.02:1, bad 4.83:1 against #ffffff.
+   */
+  --status-ok: #15803d;
+  --status-warn: #b45309;
+  --status-bad: #dc2626;
+
+  /* ------------------------------------------------------------- fonts */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* ----------------------------------------------------------- shadows
+   * Minimal by design. These two are the only elevation used anywhere.
+   */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+
+  --max: 1120px;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: light; scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font: 16px/1.6 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; }
+
+/* Body-copy links: underlined, monochrome. No colour accent in this theme. */
+a { color: var(--foreground); text-decoration-color: var(--border); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+
+/* Consistent, visible keyboard focus everywhere - never remove the outline. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+h1, h2, h3 { font-weight: 650; line-height: 1.2; margin: 0 0 .5em; color: var(--foreground); }
+h1 { font-size: clamp(28px, 5vw, 46px); letter-spacing: -0.01em; }
+h2 { font-size: clamp(22px, 3.4vw, 30px); letter-spacing: -0.01em; }
+h3 { font-size: 18px; }
+p { margin: 0 0 1em; }
+
+/* Line length is a readability control, not a preference. 62ch is the cap. */
+.lede { font-size: 19px; color: var(--muted-foreground); max-width: 62ch; }
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 22px; }
+section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+section:last-of-type { border-bottom: none; }
+
+/* Alternating tint bands give the page rhythm using greyscale value alone.
+   Add .band to any section you want tinted; keep them non-adjacent. */
+.band { background: var(--muted); }
+
+/* -------------------------------------------------------------- skip link */
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  z-index: 100;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: 12px; }
+
+/* -------------------------------------------------------------- site head */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header { background: var(--background); }
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.wordmark { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--foreground); }
+.wordmark-icon { flex: 0 0 auto; display: block; }
+.wordmark .mark { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: var(--foreground); }
+.wordmark .strap { font-size: 13px; color: var(--muted-foreground); align-self: baseline; }
+.wordmark:hover .mark { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 620px) {
+  .wordmark .strap { display: none; }
+}
+
+.site-nav ul { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; flex-wrap: wrap; align-items: center; }
+.site-nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  color: var(--muted-foreground);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.site-nav a:hover { color: var(--foreground); background: var(--muted); }
+.site-nav a.cta { color: var(--primary-foreground); background: var(--primary); }
+.site-nav a.cta:hover { filter: brightness(1.25); color: var(--primary-foreground); background: var(--primary); }
+
+/* -------------------------------------------------------------------- hero */
+
+.hero { padding-top: 56px; }
+.hero .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-art { order: -1; }
+}
+
+.hero h1 { margin-bottom: .4em; }
+.hero .sub-line { font-size: 18px; color: var(--muted-foreground); max-width: 58ch; }
+.hero .sub-line strong { color: var(--foreground); }
+
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0 14px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.btn.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.btn.primary:hover { filter: brightness(1.25); }
+.btn.ghost { background: transparent; color: var(--foreground); }
+.btn.ghost:hover { background: var(--accent); border-color: var(--foreground); }
+
+.microcopy { font-size: 13px; color: var(--muted-foreground); }
+/* Mid-section heading, one level under the section h2. Sits far enough from the
+   preceding paragraph to read as a new beat rather than a continuation. */
+.sub-heading { font-size: 19px; font-weight: 600; letter-spacing: -.01em; margin: 40px 0 10px; }
+.microcopy .sep { margin: 0 8px; opacity: .5; }
+
+.hero-art { display: flex; align-items: center; justify-content: center; }
+.hero-art svg { width: 100%; height: auto; }
+
+/* ------------------------------------------------------------------ badges */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 12px/1 var(--font-mono);
+  padding: 7px 12px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+/* Outline variant, for stating a status honestly rather than selling it. */
+.badge.outline { background: transparent; color: var(--foreground); border: 1px solid var(--border); }
+
+/* ------------------------------------------------------------------- prose */
+
+.prose-section .container { max-width: 860px; }
+.prose-section p { font-size: 17px; color: var(--foreground); }
+.prose-section p.muted { color: var(--muted-foreground); }
+.muted { color: var(--muted-foreground); }
+
+/* --------------------------------------------------------------- how-steps */
+
+.steps {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  counter-reset: step;
+}
+@media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+/* Three-step variant. Add .steps-3 alongside .steps. */
+.steps.steps-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .steps.steps-3 { grid-template-columns: 1fr; } }
+
+.steps li {
+  counter-increment: step;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  padding: 20px 18px;
+  position: relative;
+}
+.steps li::before {
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: 800 14px/1 var(--font-mono);
+  margin-bottom: 14px;
+}
+.steps h3 { margin-bottom: 6px; }
+.steps p { color: var(--muted-foreground); font-size: 14.5px; margin-bottom: 0; }
+.steps-loop {
+  margin-top: 18px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.steps-loop .loop-icon { flex: 0 0 auto; color: var(--foreground); }
+
+/* -------------------------------------------------------------------- jobs */
+
+.jobs {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 800px) { .jobs { grid-template-columns: 1fr; } }
+.jobs li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  padding: 24px 22px;
+}
+.jobs .job-kicker {
+  display: inline-block;
+  font: 800 12px/1 var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  padding: 6px 10px;
+  margin-bottom: 14px;
+}
+.jobs h3 { margin-bottom: 8px; }
+.jobs p { color: var(--muted-foreground); font-size: 15px; margin-bottom: 0; }
+
+/* Status legend. Dots are graphical (3:1 checked); labels stay in the
+   default text colour so they pass AA regardless of the dot beside them. */
+.status-legend { list-style: none; display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0 0; padding: 0; font-size: 13px; color: var(--muted-foreground); }
+.status-legend li { display: flex; align-items: center; gap: 7px; }
+.status-legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: 0 0 auto; }
+.status-legend .dot-ok { background: var(--status-ok); }
+.status-legend .dot-warn { background: var(--status-warn); }
+.status-legend .dot-bad { background: var(--status-bad); }
+/* For legends that explain a border treatment rather than a status value.
+   The swatch shows the actual treatment, so it stays monochrome and the
+   colour tokens above stay reserved for real product data. */
+.status-legend .swatch { width: 20px; height: 11px; border: 1px solid var(--foreground); border-radius: 3px; display: inline-block; flex: 0 0 auto; }
+.status-legend .swatch-spec { border-style: dashed; border-color: var(--muted-foreground); }
+
+/* ----------------------------------------------------------- proof / demo */
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-top: 30px;
+}
+@media (max-width: 900px) { .proof-grid { grid-template-columns: 1fr; } }
+
+.demo-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+.demo-panel .demo-label {
+  font: 700 12px/1 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted-foreground);
+  margin-bottom: 12px;
+}
+.demo-intro { font: 14px/1.5 var(--font-mono); color: var(--muted-foreground); margin-bottom: 14px; }
+.demo-intro strong { color: var(--foreground); }
+
+/* Generic three-column data rows: key, description, trailing meta. */
+.spec-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.spec-list li {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.spec-list .key { font: 700 14px/1.35 var(--font-mono); color: var(--foreground); }
+.spec-list .name { color: var(--foreground); }
+.spec-list .name .tag { color: var(--muted-foreground); font: 12px/1 var(--font-mono); margin-left: 6px; }
+.spec-list .meta { color: var(--muted-foreground); font: 12px/1 var(--font-mono); text-align: right; white-space: nowrap; }
+.spec-list li.is-main { background: var(--card); border-color: var(--foreground); border-width: 1.5px; }
+/* Dashed = present but not yet real. Mark absence honestly, never hide it. */
+.spec-list li.is-pending { border-style: dashed; background: var(--card); }
+.spec-list li.is-pending .name { color: var(--muted-foreground); font-style: italic; }
+
+@media (max-width: 480px) {
+  .spec-list li { grid-template-columns: 1fr; gap: 4px; }
+  .spec-list .meta { text-align: left; }
+}
+
+/* Grid rather than flex-wrap: with flex, one long label pushes a single stat
+   onto its own line and the row reads as 1-then-2 instead of an even set. */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 22px; margin: 22px 0; }
+.stat b { display: block; font: 800 26px/1.1 var(--font-mono); color: var(--foreground); }
+.stat span { font-size: 13px; color: var(--muted-foreground); }
+
+/* --------------------------------------------------------------- terminal */
+
+.terminal {
+  background: var(--foreground);
+  color: #fafafa;
+  border-radius: var(--radius-xl);
+  padding: 18px 20px;
+  font: 13.5px/1.7 var(--font-mono);
+  overflow-x: auto;
+  margin: 22px 0;
+}
+.terminal .prompt { color: #a3a3a3; user-select: none; }
+.terminal .comment { color: #a3a3a3; }
+.terminal pre { margin: 0; font: inherit; }
+
+/* ------------------------------------------------------------- comparison */
+
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 34px; }
+@media (max-width: 760px) { .compare-grid { grid-template-columns: 1fr; } }
+.compare-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  padding: 22px;
+}
+.compare-card h3 { color: var(--muted-foreground); font-size: 14px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+.compare-card p { font-size: 15px; margin-bottom: 0; }
+.compare-close { margin-top: 26px; font-size: 17px; }
+.compare-close strong { color: var(--foreground); }
+
+/* ------------------------------------------------------------- data table */
+
+.data-table { width: 100%; border-collapse: collapse; margin-top: 26px; font-size: 15px; }
+.data-table caption { text-align: left; color: var(--muted-foreground); font-size: 14px; margin-bottom: 10px; }
+.data-table th, .data-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.data-table thead th {
+  font: 800 12px/1 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted-foreground);
+  border-bottom: 1.5px solid var(--foreground);
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table code { font: 13px/1.5 var(--font-mono); background: var(--muted); border-radius: var(--radius-sm); padding: 2px 6px; }
+
+@media (max-width: 640px) {
+  .data-table, .data-table thead, .data-table tbody, .data-table tr, .data-table th, .data-table td { display: block; }
+  .data-table thead { display: none; }
+  .data-table tr { border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 12px; padding: 6px 4px; }
+  .data-table td { border-bottom: none; padding: 8px 12px; }
+}
+
+/* ------------------------------------------------------------- assurances */
+
+.assurance-list { list-style: none; margin: 26px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 640px) { .assurance-list { grid-template-columns: 1fr; } }
+.assurance-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  padding: 14px 16px;
+  font-size: 14.5px;
+}
+.assurance-list .icon { flex: 0 0 auto; color: var(--foreground); margin-top: 2px; }
+
+/* -------------------------------------------------------------------- faq */
+
+.faq-list { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+}
+.faq-item summary {
+  cursor: pointer;
+  padding: 16px 18px;
+  font-weight: 650;
+  font-size: 16px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary .chevron { flex: 0 0 auto; transition: transform .15s ease; color: var(--muted-foreground); }
+.faq-item[open] summary .chevron { transform: rotate(90deg); }
+.faq-item summary:hover { background: var(--muted); }
+.faq-item .faq-answer { padding: 0 18px 18px; color: var(--muted-foreground); font-size: 15px; max-width: 72ch; }
+.faq-item .faq-answer p { margin-bottom: 0; }
+.faq-item .faq-answer p + p { margin-top: .8em; }
+
+/* ----------------------------------------------------------------- footer */
+
+.site-footer { padding: 40px 0 60px; }
+.site-footer .container { display: flex; flex-direction: column; gap: 14px; }
+.footer-links { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-links a { color: var(--foreground); font-weight: 650; text-decoration: none; }
+.footer-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.footer-credits { color: var(--muted-foreground); font-size: 13px; max-width: 80ch; }
+.footer-credits a { color: var(--muted-foreground); text-decoration-color: var(--border); }
+.footer-credits a:hover { color: var(--foreground); text-decoration-color: currentColor; }
+.footer-note { color: var(--muted-foreground); font-size: 12.5px; }
+
+/* ------------------------------------------------------------- misc utils */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; border: 0; padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}

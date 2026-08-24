@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in this repository is wrong or broken
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is for defects in Agent Spark content, schemas, or the validator.
+
+        Copilot Studio or `pac` CLI problems belong with Microsoft Support, not here. See
+        [SUPPORT.md](../blob/main/SUPPORT.md) for the routing table.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Template
+        - Skill
+        - Schema
+        - Validator or CI
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: File or path
+      placeholder: templates/knowledge-assistant/instructions.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what happened instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. npm install
+        2. npm run validate
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Validator output
+      description: Output of `npm run validate` if relevant. Remove tenant IDs and environment URLs first.
+      render: shell
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: macOS 15, Node 20.11, pac 1.34

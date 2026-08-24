@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentspark.dev/schemas/v1alpha1/skill.schema.json",
+  "title": "Skill",
+  "description": "YAML front matter of a SKILL.md file. The Markdown body carries the behavior guidance; this block carries the contract.",
+  "type": "object",
+  "required": ["name", "description", "version", "owner", "license", "provenance", "maturity", "useWhen", "doNotUseWhen", "outputs", "guardrails"],
+  "additionalProperties": false,
+  "properties": {
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,48}[a-z0-9]$" },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 300,
+      "description": "Trigger language. This is what the orchestrator matches against, so it must name the outcome, not the implementation."
+    },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$" },
+    "owner": { "type": "string", "pattern": "^@[A-Za-z0-9-]+$" },
+    "license": { "type": "string", "minLength": 1 },
+    "provenance": { "type": "string", "minLength": 10 },
+    "maturity": { "type": "string", "enum": ["experimental", "beta", "stable", "deprecated"] },
+    "reviewBy": { "type": "string", "format": "date" },
+    "deprecatedBy": {
+      "type": "string",
+      "description": "Name of the replacement skill. Required in spirit whenever maturity is deprecated."
+    },
+    "useWhen": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 10 },
+      "description": "Conditions under which this skill should fire."
+    },
+    "doNotUseWhen": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 10 },
+      "description": "Conditions under which this skill must not fire. These prevent more failures than useWhen does."
+    },
+    "inputs": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "required"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$" },
+          "type": { "type": "string", "enum": ["string", "text", "boolean", "number", "list", "object"] },
+          "required": { "type": "boolean" },
+          "description": { "type": "string" },
+          "sensitive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Sensitive inputs must not appear in logs, reports, or evaluation transcripts."
+          },
+          "validation": { "type": "string", "description": "Regular expression or stated rule applied before use." }
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["name", "access"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "access": { "type": "string", "enum": ["read", "write", "read-write"] },
+          "requiresConfirmation": { "type": "boolean", "default": true },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 5 },
+          "required": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "guardrails": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 10 },
+      "description": "Refusal, data handling, and escalation rules. Stated as absolutes, not preferences."
+    },
+    "evaluations": {
+      "type": "string",
+      "pattern": "^\\./[A-Za-z0-9._/-]+$",
+      "not": { "pattern": "\\.\\." },
+      "description": "Path to the evaluation suite for this skill, relative to SKILL.md."
+    },
+    "examples": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["kind", "path"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "type": "string", "enum": ["positive", "negative", "ambiguous"] },
+          "path": { "type": "string", "pattern": "^\\./[A-Za-z0-9._/-]+$", "not": { "pattern": "\\.\\." } }
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "harness": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["github-copilot", "standard", "copilot-chat"] }
+        },
+        "verified": { "type": "boolean" }
+      }
+    }
+  }
+}

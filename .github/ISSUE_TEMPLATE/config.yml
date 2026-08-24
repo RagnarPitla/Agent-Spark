@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/RagnarPitla/Agent-Spark/security/advisories/new
+    about: Report privately. Do not open a public issue.
+  - name: Copilot Studio or Power Platform CLI problem
+    url: https://community.powerplatform.com/
+    about: Agent Spark maintainers cannot act on platform defects. Use Microsoft Support or the community forum.
+  - name: Design question or early idea
+    url: https://github.com/RagnarPitla/Agent-Spark/discussions
+    about: For anything not yet concrete enough to be a bug or a proposal.
