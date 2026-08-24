@@ -12,6 +12,7 @@
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
@@ -322,7 +323,26 @@ function checkAscii(files) {
 // Run
 // ---------------------------------------------------------------------------
 
-const allFiles = walk(ROOT);
+/**
+ * The repository's own files, which means the tracked ones. Walking the disk
+ * counts build output and editor leftovers too, so the same commit reports a
+ * different number on a developer's machine than in CI. That matters because
+ * the landing page quotes this count back, and a number that moves depending
+ * on who ran it is not evidence of anything.
+ */
+function repositoryFiles() {
+  try {
+    return execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' })
+      .split('\0')
+      .filter(Boolean)
+      .map((p) => join(ROOT, p))
+      .filter(exists);
+  } catch {
+    return walk(ROOT);
+  }
+}
+
+const allFiles = repositoryFiles();
 
 validateTemplates();
 validateSkills();
