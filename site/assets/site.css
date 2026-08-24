@@ -505,6 +505,12 @@ section:last-of-type { border-bottom: none; }
   margin-right: 3px;
 }
 
+/* The explainer banner sits directly under the hero, so it drops the usual
+   section padding and the divider. It needs the full container width: at the
+   hero art column width its labels render at about 7px. */
+.banner-figure { padding: 34px 0 64px; border-bottom: 1px solid var(--border); }
+.banner-figure .figure { margin: 0; }
+
 /* ------------------------------------------------------------- comparison */
 
 .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 34px; }
