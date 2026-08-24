@@ -362,7 +362,7 @@
 <pre><span class="prompt">$</span> npm run validate
 
 Agent Spark validator
-  files scanned:      61
+  files scanned:      72
   manifests validated: 6
   schema             pass
   references         pass
@@ -521,8 +521,8 @@ PASSED.</pre>
 
     <div class="footer-author">
       <p class="footer-bio">
-        Built by Ragnar Pitla, who builds agent tooling for Copilot Studio and the Power Platform in
-        the open, and writes up what survives contact with a real tenant.
+        Built by Ragnar Pitla, a principal architect and agent developer. He designs and ships AI
+        agents, and teaches other people to build their own.
       </p>
       <div class="connect-links">
         <a class="connect-link" href="https://www.linkedin.com/in/ragnarpitla" target="_blank" rel="noopener noreferrer">
@@ -545,6 +545,58 @@ PASSED.</pre>
     </div>
   </div>
 </footer>
+
+<script>
+// Copy buttons for terminal blocks. Injected rather than authored into the
+// markup, so a page with JS disabled shows no button it cannot honour.
+// Only prompt lines are copied; command output is never put on the clipboard.
+(function () {
+  if (!navigator.clipboard) return;
+
+  var ICON = '<svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" focusable="false">'
+    + '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">'
+    + '<rect x="9" y="9" width="11" height="11" rx="2"/>'
+    + '<path d="M5 15V5a2 2 0 0 1 2-2h10"/></g></svg>';
+
+  Array.prototype.forEach.call(document.querySelectorAll('.terminal'), function (term) {
+    var pre = term.querySelector('pre');
+    if (!pre) return;
+
+    var commands = pre.textContent.split('\n')
+      .filter(function (line) { return line.slice(0, 2) === '$ '; })
+      .map(function (line) { return line.slice(2); })
+      .join('\n');
+    if (!commands) return;
+
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-button';
+    button.setAttribute('aria-label', 'Copy commands to clipboard');
+    button.innerHTML = ICON + '<span class="copy-text">Copy</span>';
+
+    var label = button.querySelector('.copy-text');
+    var timer;
+
+    button.addEventListener('click', function () {
+      navigator.clipboard.writeText(commands).then(function () {
+        window.clearTimeout(timer);
+        label.textContent = 'Copied';
+        button.setAttribute('data-copied', 'true');
+        button.setAttribute('aria-label', 'Commands copied to clipboard');
+        timer = window.setTimeout(function () {
+          label.textContent = 'Copy';
+          button.removeAttribute('data-copied');
+          button.setAttribute('aria-label', 'Copy commands to clipboard');
+        }, 2000);
+      }).catch(function () {
+        label.textContent = 'Press Ctrl C';
+      });
+    });
+
+    term.appendChild(button);
+  });
+})();
+</script>
 
 </body>
 </html>

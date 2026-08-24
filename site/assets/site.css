@@ -428,17 +428,42 @@ section:last-of-type { border-bottom: none; }
 /* --------------------------------------------------------------- terminal */
 
 .terminal {
+  position: relative;
   background: var(--foreground);
   color: #fafafa;
   border-radius: var(--radius-xl);
   padding: 18px 20px;
   font: 13.5px/1.7 var(--font-mono);
-  overflow-x: auto;
   margin: 22px 0;
 }
 .terminal .prompt { color: #a3a3a3; user-select: none; }
 .terminal .comment { color: #a3a3a3; }
-.terminal pre { margin: 0; font: inherit; }
+.terminal pre { margin: 0; font: inherit; overflow-x: auto; }
+.terminal:has(.copy-button) pre { padding-right: 84px; }
+
+.copy-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #404040;
+  border-radius: var(--radius-sm);
+  background: #1c1c1c;
+  color: #d4d4d4;
+  font: 650 12px/1 var(--font-sans);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+.copy-button:hover { background: #2e2e2e; color: #fafafa; border-color: #6b6b6b; }
+.copy-button[data-copied="true"] { background: #fafafa; color: #0a0a0a; border-color: #fafafa; }
+.copy-icon { flex: none; display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-button { transition: none; }
+}
 
 /* ------------------------------------------------------------- comparison */
 
@@ -539,13 +564,15 @@ section:last-of-type { border-bottom: none; }
 .footer-author {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 12px;
   margin-top: 10px;
   padding-top: 20px;
   border-top: 1px solid var(--border);
 }
-.footer-bio { color: var(--muted-foreground); font-size: 13px; max-width: 72ch; margin: 0; }
-.connect-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.footer-bio { color: var(--muted-foreground); font-size: 13px; max-width: 62ch; margin: 0 auto; }
+.connect-links { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .connect-link {
   display: inline-flex;
   align-items: center;
