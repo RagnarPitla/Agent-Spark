@@ -35,20 +35,33 @@ jobs:
       - name: Prove the template still generates
         run: npm run proof
 
-      - name: Confirm the landing page quotes real validator output
+      - name: Confirm the landing page quotes real terminal output
         run: |
-          # The page shows a validator transcript. Every count in it moves when
-          # the repo does, so it goes stale silently and the page starts lying
-          # about its own tooling. Compare the whole block against the run that
-          # just happened rather than trusting the page.
+          # The page shows two transcripts. Every count in them moves when the
+          # repo does, so they go stale silently and the page starts lying about
+          # its own tooling. Compare both against the runs that just happened
+          # rather than trusting the page. The file count had already drifted
+          # twice before this check existed.
+          sed 's/<[^>]*>//g' site/index.html > /tmp/page.txt
+
+          check() {
+            sed -n "/^$2\$/,/^$3\$/p" /tmp/page.txt > /tmp/claimed.txt
+            if [ ! -s /tmp/claimed.txt ]; then
+              echo "::error::could not find the $1 transcript in site/index.html"
+              exit 1
+            fi
+            diff -u /tmp/claimed.txt /tmp/actual.txt || {
+              echo "::error::the $1 transcript in site/index.html no longer matches real output"
+              exit 1
+            }
+            echo "$1 transcript matches real output"
+          }
+
           npm run validate --silent | sed -n '/^Agent Spark validator$/,/^PASSED\.$/p' > /tmp/actual.txt
-          sed 's/<[^>]*>//g' site/index.html \
-            | sed -n '/^Agent Spark validator$/,/^PASSED\.$/p' > /tmp/claimed.txt
-          if ! diff -u /tmp/claimed.txt /tmp/actual.txt; then
-            echo "::error::the validator transcript in site/index.html no longer matches real output"
-            exit 1
-          fi
-          echo "landing page transcript matches real validator output"
+          check validator 'Agent Spark validator' 'PASSED\.'
+
+          npm run proof --silent | sed -n '/^Agent Spark round-trip proof$/,/^PASSED\..*$/p' > /tmp/actual.txt
+          check proof 'Agent Spark round-trip proof' 'PASSED\..*'
 
       - name: Confirm no template variables leaked into samples
         run: |

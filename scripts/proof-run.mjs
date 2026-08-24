@@ -113,7 +113,6 @@ const out = join(work, VALUES.agentName);
 
 console.log('Agent Spark round-trip proof');
 console.log(`  template:  ${TEMPLATE}`);
-console.log(`  output:    ${out}`);
 console.log('');
 
 // 1. declared ---------------------------------------------------------------

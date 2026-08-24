@@ -494,8 +494,44 @@ Agent Spark validator
 
 PASSED.</pre>
       </div>
+
+      <h3 class="sub-heading">And one that checks the template still generates</h3>
+      <p>
+        The second command takes the starter template through the substitution its own README
+        documents, into a temporary directory, and then checks seven things about what came out.
+      </p>
+      <div class="terminal">
+<pre><span class="prompt">$</span> npm run proof
+
+Agent Spark round-trip proof
+  template:  knowledge-assistant
+
+  files declared:     8
+  files generated:    8
+  variables declared: 8
+  placeholders filled: 29
+  yaml files parsed:  2
+
+  declared      pass
+  orphans       pass
+  reference     pass
+  substituted   pass
+  verbatim      pass
+  parses        pass
+  safety        pass
+
+PASSED. Generation only. Nothing here was run against a live environment.</pre>
+      </div>
       <p class="microcopy">
-        That is the whole toolchain today: one validator, no install step beyond
+        It failed on its first run and found a real bug. The template documented its own eight
+        variables in a table inside <code>README.md</code>, and generation then substituted that
+        table, so the checklist came out listing Finance values next to HR examples instead of
+        naming the variables. The documented <code>sed</code> example had been rewritten into a
+        no-op that replaced a string with itself. Both are fixed, and the
+        <code>reference</code> check above is the one that caught it.
+      </p>
+      <p class="microcopy">
+        That is the whole toolchain today: two commands, no install step beyond
         <code>git clone</code>, and no agent content generated for you yet.
       </p>
     </div>
