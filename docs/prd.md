@@ -243,10 +243,17 @@ Agent Spark surfaces this at plan time rather than letting it fail mid-execution
 ### Still unverified
 
 Command existence is not behavior. Open: whether workspace commands behave differently for GitHub
-Copilot harness agents than for standard harness agents, whether the on-disk workspace format is
-documented or incidental, and which commands are preview. The adapter discovers capability through
-version and help output rather than assuming. See
-[ADR-0002](adr/0002-supported-interfaces-only.md).
+Copilot harness agents than for standard harness agents, which commands are preview, and what
+`pac copilot init` actually writes to disk. The adapter discovers capability through version and
+help output rather than assuming. See [ADR-0002](adr/0002-supported-interfaces-only.md).
+
+Closed on 2026-08-24: whether the on-disk workspace format is documented or incidental. It is
+**incidental**. Microsoft's VS Code extension repository ships a placeholder standing in for
+workspace documentation that does not exist, and the Copilot Studio YAML schema is published under
+an explicit "may change without notice". Under ADR-0002 rule 2 this is now binding: Agent Spark
+scaffolds by invoking `pac copilot init` without `--environment`, never by writing workspace files
+itself, and never synthesizes the sync metadata behind `pull` and `push`. Evidence:
+[.research/pac-workspace-format.md](../.research/pac-workspace-format.md).
 
 ## 14. Security and governance
 

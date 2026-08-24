@@ -59,9 +59,29 @@ Partly discharged on 2026-08-24. The `pac copilot` command set was verified agai
 reference, which corrected three errors in the source brief. See
 [official-resources.md](../official-resources.md).
 
-Still unverified: whether the on-disk workspace format is documented or incidental. If it is
-incidental, rule 2 forbids generating into it directly, and generation must route through
-`pac copilot init` and `create`. That is a significant design constraint and it is not yet settled.
+Workspace format settled on 2026-08-24. The question was whether the on-disk workspace format is
+documented or incidental. It is **incidental**, so rule 2 applies and Agent Spark may not generate
+into it directly. Full evidence in [.research/pac-workspace-format.md](../../.research/pac-workspace-format.md).
+
+The decisive source is Microsoft's own VS Code extension repository, which ships
+`docs/McsWorkspace.md` stating "This is a placeholder for workspace documentation. In the future,
+links to this page should be replaced with official MCS documentation." Supporting it: Microsoft
+repositories carrying the Copilot Studio YAML schema say it "may change without notice", the schema
+blob has no `$id` and no version, and four Microsoft sources disagree on the file names, one of them
+carrying a typo in a filename.
+
+Consequence for the implementer: bring workspaces into existence with `pac copilot init` run
+WITHOUT `--environment`, which is the only scaffold path documented to need no sign-in and to write
+nothing to Dataverse. Never synthesize the sync metadata that `pull` and `push` depend on; its
+format is documented nowhere.
+
+This paragraph previously said generation must route through "`pac copilot init` and `create`". The
+`create` half was wrong. `pac copilot create` is not a workspace generator: it creates an agent in a
+tenant from a file produced by `extract-template`. Do not pair it with `init`.
+
+Still unverified, and it needs a spike rather than more reading: what `pac copilot init` actually
+writes to disk. Every claim about the folder layout is inferred from documentation, because nobody
+has run the command. See section 6 of the research file for the exact commands that would close it.
 
 ## Alternatives considered
 

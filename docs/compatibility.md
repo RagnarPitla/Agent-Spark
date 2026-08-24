@@ -64,17 +64,26 @@ recorded output from several versions.
 
 1. Whether workspace commands behave differently for GitHub Copilot harness agents than for
    standard harness agents.
-2. What the on-disk workspace format is, and whether it is documented or incidental.
+2. What `pac copilot init` actually writes to disk. The documentation question below is now
+   answered; this is the part that still needs an installed `pac`, because no Microsoft page
+   enumerates the files.
 3. Which commands are preview, and what the preview policy implies for a tool that wraps them.
 4. What the verified commands actually do against a live environment, as opposed to what the
    reference says they do.
 
-Question 2 matters most. If the workspace format is incidental rather than documented, generating
-into it is building on something that can change without notice, and the design has to route
-through supported commands instead of writing workspace files directly.
+**Question 2 was the documentation half of the old question and it is now closed. The workspace
+format is INCIDENTAL.** Microsoft's VS Code extension repository ships a placeholder file admitting
+official workspace documentation does not exist, the Copilot Studio YAML schema is published under
+"may change without notice", and four Microsoft sources disagree on the file names. Evidence and
+sources: [.research/pac-workspace-format.md](../.research/pac-workspace-format.md).
 
-Two questions were closed on 2026-08-24: which commands exist, and what a `push` conflict looks
-like. Both are recorded above.
+The consequence, which is now a constraint rather than a risk: ADR-0002 rule 2 forbids generating
+workspace files directly. Agent Spark must scaffold with `pac copilot init` run without
+`--environment`, the only path documented to require no sign-in and write nothing to Dataverse, and
+must never synthesize the sync metadata that `pull` and `push` rely on.
+
+Three questions were closed on 2026-08-24: which commands exist, what a `push` conflict looks
+like, and whether the workspace format is documented. All three are recorded above.
 
 ## Harness compatibility
 
