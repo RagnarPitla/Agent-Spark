@@ -694,7 +694,8 @@ Never invent a reference to fill the slot.</pre>
       <h2 id="gate-heading">The command that looks local</h2>
       <p class="lede">
         There is a command in the Power Platform CLI called <code>pac copilot init</code>. Add
-        <code>--environment</code> and, per the published reference, it does four things.
+        <code>--environment</code> and it does five things. We ran it against a real environment on
+        25 August 2026, because the fifth one is not in the reference.
       </p>
 
       <div class="verb-row">
@@ -718,12 +719,25 @@ Never invent a reference to fill the slot.</pre>
           <span class="verb-where">your tenant</span>
           <p class="verb-detail">Binds the agent to it.</p>
         </div>
+        <div class="verb tenant">
+          <span class="verb-name">publish</span>
+          <span class="verb-where">your tenant</span>
+          <p class="verb-detail">Makes it live, minutes after the command already exited.</p>
+        </div>
       </div>
 
       <p>
         <code>init</code> is the most local-sounding word in developer tooling. It is what you
-        type when you expect a folder to appear. Half of what this one does is a tenant write,
-        and a wrapper that passes it through without showing you first is setting a trap.
+        type when you expect a folder to appear. Three of the five things this one does are tenant
+        writes, and a wrapper that passes it through without showing you first is setting a trap.
+      </p>
+
+      <p>
+        The fifth is the one to watch. We never ran <code>pac copilot publish</code>. The agent was
+        created at 1:50 PM and its <code>publishedon</code> field reads 1:54 PM, four minutes after
+        <code>init</code> had returned success and handed back the shell. There is no window in
+        which you have an unpublished agent to inspect. Omit <code>--environment</code> and none of
+        this happens: five local runs left the tenant's agent count unchanged at 65.
       </p>
 
       <figure class="figure">
@@ -777,9 +791,20 @@ Never invent a reference to fill the slot.</pre>
       </figure>
 
       <p class="microcopy">
-        Honest limit: the command surface above was verified on 24 August 2026 against Microsoft's
-        published <code>pac copilot</code> reference. Its behaviour against a live environment has
-        not been observed, and running it is the project's next task rather than a finished one.
+        Observed, not read. On 25 August 2026 we ran this against a live environment with
+        <code>pac</code> 2.11.2 and recorded the result: <code>init --environment</code> imported a
+        solution and left a published agent behind. The same command without
+        <code>--environment</code> wrote nothing to the tenant across five runs, which is worth
+        knowing, because the CLI's own help says the active organisation is used when the flag is
+        omitted. Read plainly that implies the opposite of what happens.
+      </p>
+      <p class="microcopy">
+        One thing this cost us. The template generates a 71-line
+        <code>instructions.md</code>, and <code>pac copilot init --instructions</code> cannot accept
+        it: the CLI re-parses its own argument string and fails on the first newline, with
+        <code>Parse failed on: ## Role</code>. A single-line value with spaces works. So the flag
+        carries only instructions short enough to fit on one line, which no real agent has. Any
+        path from a generated file has to go through the workspace YAML instead.
       </p>
     </div>
   </section>

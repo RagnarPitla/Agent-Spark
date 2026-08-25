@@ -9,10 +9,13 @@ Agent Spark writes files, runs commands, and changes tenant state. Several of th
 expensive to undo. Publishing an agent, importing a solution, and deleting one are not reversible
 by pressing a key.
 
-The verified behavior of `pac copilot init --environment` makes this sharper: the documentation
-states it scaffolds, packs, imports, and connects in one step. That is a tenant write behind a
-command whose name suggests a local operation. A tool that passes that command through without
-showing the user what it is about to do is setting a trap.
+The verified behavior of `pac copilot init --environment` makes this sharper. The documentation
+states it scaffolds, packs, imports, and connects in one step. Running it on 2026-08-25 showed a
+fifth action the reference does not mention: it publishes. The agent was created at 1:50 PM and its
+`publishedon` field reads 1:54 PM, four minutes after the command had already returned success and
+handed back the shell. That is a tenant write, and then a go-live, behind a command whose name
+suggests a local operation. A tool that passes that command through without showing the user what
+it is about to do is setting a trap.
 
 Users also need to review changes before they happen, sometimes formally. An architect approving a
 deployment wants to read what will change, not run it and inspect the aftermath.

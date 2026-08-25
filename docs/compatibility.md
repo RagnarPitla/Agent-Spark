@@ -7,8 +7,9 @@ Two kinds of statement appear here, and they are labelled:
 - **Verified.** Someone ran it and recorded the result.
 - **Intended.** A design target with no test behind it.
 
-Statements about the Copilot Studio platform are mostly still **intended**. One exception, added
-2026-08-24: the `pac copilot` command surface has been verified against the published reference.
+Statements about the Copilot Studio platform are mostly still **intended**. Two exceptions: the
+`pac copilot` command surface was verified against the published reference on 2026-08-24, and on
+2026-08-25 `pac copilot init` was run against a live environment and its behaviour recorded below.
 Phase 0 in the [PRD](prd.md) exists to convert the rest.
 
 ## This repository
@@ -52,9 +53,16 @@ recorded output from several versions.
 
 ### Verified behavior that constrains the design
 
+Rows marked 2026-08-25 were observed against a live environment (`pac` 2.11.2, macOS). The rest
+were read from the published reference.
+
 | Finding | Consequence |
 | --- | --- |
-| `init --environment` scaffolds, packs, imports and connects | It is a tenant write behind a local-sounding name. Gated like a publish, and off the default path |
+| `init --environment` scaffolds, packs, imports, connects, **and publishes** (2026-08-25) | The reference documents four actions. There is a fifth. It lands asynchronously, minutes after the command exits successfully, so there is no moment at which an unpublished agent exists to inspect |
+| `init` without `--environment` writes nothing to Dataverse (2026-08-25) | Verified across five runs: the environment's agent count did not move and no scaffold reached the tenant. ADR-0002 rule 2 depends on this, so it is now a measured fact rather than an inference from the docs |
+| `init --instructions` cannot accept a value containing a newline (2026-08-25) | Fails with `Parse failed on: ## Role`. The CLI re-parses a reconstructed command string rather than reading argv, so a correctly quoted multi-line argument still splits. A single-line value with spaces works. Generated instruction files cannot be passed this way |
+| `pac copilot status` fails on this environment (2026-08-25) | Queries `componentstate_Property`, which the `bot` entity does not expose. Not a permissions problem. Do not build a status check on it |
+| `pac copilot list` output is not safe to parse (2026-08-25) | The table builds its header from whichever attributes the first row has non-null, so later rows gain unlabelled columns. Filter server-side instead |
 | `push` stops on a server-side change and directs you to pull | Presented as a conflict with both sides visible. Never auto-pulled |
 | `clone` refuses to write into a non-empty target folder | Surfaced at plan time rather than failing mid-execution |
 | `delete` requires `--confirm` / `-y` | Target identity is displayed before the prompt |
@@ -64,12 +72,14 @@ recorded output from several versions.
 
 1. Whether workspace commands behave differently for GitHub Copilot harness agents than for
    standard harness agents.
-2. What `pac copilot init` actually writes to disk. The documentation question below is now
-   answered; this is the part that still needs an installed `pac`, because no Microsoft page
-   enumerates the files.
-3. Which commands are preview, and what the preview policy implies for a tool that wraps them.
-4. What the verified commands actually do against a live environment, as opposed to what the
-   reference says they do.
+2. Which commands are preview, and what the preview policy implies for a tool that wraps them.
+3. Whether `pac copilot push` also triggers a publish, the way `init --environment` does. Not yet
+   run.
+
+**Closed 2026-08-25 by running it.** `pac copilot init` writes sixteen files: `agent.mcs.yml`,
+`settings.mcs.yml`, `icon.png`, and thirteen system topics under `topics/`. The old question 4,
+what the commands do against a live environment rather than what the reference says, is answered
+for `init` and open for the rest.
 
 **Question 2 was the documentation half of the old question and it is now closed. The workspace
 format is INCIDENTAL.** Microsoft's VS Code extension repository ships a placeholder file admitting

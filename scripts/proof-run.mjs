@@ -30,8 +30,9 @@ import { tmpdir } from 'node:os';
 import { parse as parseYaml } from 'yaml';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const TEMPLATE = process.argv[2] ?? 'knowledge-assistant';
-const KEEP = process.argv.includes('--keep');
+const args = process.argv.slice(2);
+const TEMPLATE = args.find((a) => !a.startsWith('--')) ?? 'knowledge-assistant';
+const KEEP = args.includes('--keep');
 
 // A worked example, not a default. Every value is one a real Finance rollout
 // would have to choose, so the substitution exercises realistic lengths.

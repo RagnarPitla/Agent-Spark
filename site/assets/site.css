@@ -764,7 +764,7 @@ section:last-of-type { border-bottom: none; }
   margin: 24px 0 0;
 }
 @media (min-width: 760px) {
-  .verb-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .verb-row { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 
 .verb {
