@@ -740,6 +740,17 @@ Never invent a reference to fill the slot.</pre>
         this happens: five local runs left the tenant's agent count unchanged at 65.
       </p>
 
+      <p>
+        Then we pushed a change to the same agent, expecting the same thing again. It did not
+        happen. Across 37 minutes and 70 samples, <code>publishedon</code> did not move by a single
+        second, and the server's own record of its last publish still described the one
+        <code>init</code> had triggered half an hour earlier. So the CLI is not simply
+        publish-happy. The command that <em>creates</em> an agent publishes it; the command that
+        <em>updates</em> one does not. That asymmetry is worth carrying around, because both halves
+        surprise people, and in opposite directions. The first ships something you did not mean to
+        ship. The second leaves your fix sitting in a draft while you believe it is live.
+      </p>
+
       <figure class="figure">
         <div class="diagram">
           <svg viewBox="0 0 880 240" role="img" aria-label="Every state-changing operation splits into two phases. Plan is pure: it reads project files, template files and cached capability information, and returns the files it would write, the exact commands it would run, the tenant writes involved and the permissions required. Plan writes nothing. Between plan and execute sits a review and confirmation gate that a human passes. Only after that gate does execute run, writing files and performing tenant writes, with a checkpoint saved between steps so a failure resumes rather than restarts. The dry-run flag is the plan phase on its own, not a separate code path.">
@@ -797,6 +808,17 @@ Never invent a reference to fill the slot.</pre>
         <code>--environment</code> wrote nothing to the tenant across five runs, which is worth
         knowing, because the CLI's own help says the active organisation is used when the flag is
         omitted. Read plainly that implies the opposite of what happens.
+      </p>
+
+      <p>
+        The same run turned up something that undercuts this template specifically. A fresh scaffold
+        arrives with <code>webBrowsing: true</code> and <code>useModelKnowledge: true</code>, and no
+        knowledge source attached to anything. Drop in instructions that say <em>answer from the
+        approved handbook and nothing else</em>, and you have written a sentence the configuration
+        does not enforce. The agent will reach the open web and its own training data, and it will
+        sound just as confident doing it. Nothing warns you. So the template sets both to
+        <code>false</code> explicitly rather than relying on the scaffold, and the reason it can is
+        that somebody ran it and read the file afterwards.
       </p>
       <p class="microcopy">
         One thing this cost us. The template generates a 71-line

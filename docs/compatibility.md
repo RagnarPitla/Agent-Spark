@@ -63,6 +63,12 @@ were read from the published reference.
 | `init --instructions` cannot accept a value containing a newline (2026-08-25) | Fails with `Parse failed on: ## Role`. The CLI re-parses a reconstructed command string rather than reading argv, so a correctly quoted multi-line argument still splits. A single-line value with spaces works. Generated instruction files cannot be passed this way |
 | `pac copilot status` fails on this environment (2026-08-25) | Queries `componentstate_Property`, which the `bot` entity does not expose. Not a permissions problem. Do not build a status check on it |
 | `pac copilot list` output is not safe to parse (2026-08-25) | The table builds its header from whichever attributes the first row has non-null, so later rows gain unlabelled columns. Filter server-side instead |
+| `push` does **not** publish (2026-08-25) | Measured over 37 minutes and 70 samples at 30-second intervals: `publishedon` did not move by a single second, and the server's own `lastFinishedPublishOperation` record still described the earlier `init` publish. `push` is also synchronous, so there is no asynchronous tail for a publish to hide in. The asymmetry is the thing to remember: the command that creates an agent publishes it, the command that updates one does not |
+| A pushed change is therefore not live (2026-08-25) | Follows directly from the row above, and is the more useful half for anyone iterating. `push` updates the draft. Making that draft reach users is a separate, deliberate act |
+| `push` rewrites your working tree (2026-08-25) | It is not a one-way upload. A single push rewrote `agent.mcs.yml`, `settings.mcs.yml`, `.mcs/botdefinition.json` and `.mcs/changetoken.txt`. Instruction content survived byte-identically, so this is YAML reserialisation rather than content loss, but any check that treats a dirty tree as unpushed work will misread it |
+| `push` has no `--environment` flag (2026-08-25) | It takes only `--project-dir`. The target comes from `.mcs/conn.json` plus the active auth profile, so it is invisible at the call site. Automation should assert on `conn.json` rather than trust an argument it cannot pass |
+| Generated instructions reach a live agent through workspace YAML (2026-08-25) | The path `init --instructions` cannot take, this one can. A 3449-byte generated instruction file placed in `agent.mcs.yml` as a literal block scalar arrived server-side with an identical SHA-256. This is the only route that carries a real instruction file to a live agent |
+| The scaffold's defaults contradict a source-grounded agent (2026-08-25) | `pac copilot init` sets `gptCapabilities.webBrowsing: true` and `useModelKnowledge: true`, and wires up no knowledge source. An agent told to answer only from one approved handbook will, as scaffolded, answer from the open web and from model training data instead. Nothing warns you. A template that claims grounding has to turn both off explicitly |
 | `push` stops on a server-side change and directs you to pull | Presented as a conflict with both sides visible. Never auto-pulled |
 | `clone` refuses to write into a non-empty target folder | Surfaced at plan time rather than failing mid-execution |
 | `delete` requires `--confirm` / `-y` | Target identity is displayed before the prompt |
@@ -73,13 +79,17 @@ were read from the published reference.
 1. Whether workspace commands behave differently for GitHub Copilot harness agents than for
    standard harness agents.
 2. Which commands are preview, and what the preview policy implies for a tool that wraps them.
-3. Whether `pac copilot push` also triggers a publish, the way `init --environment` does. Not yet
-   run.
 
 **Closed 2026-08-25 by running it.** `pac copilot init` writes sixteen files: `agent.mcs.yml`,
-`settings.mcs.yml`, `icon.png`, and thirteen system topics under `topics/`. The old question 4,
-what the commands do against a live environment rather than what the reference says, is answered
-for `init` and open for the rest.
+`settings.mcs.yml`, `icon.png`, and thirteen system topics under `topics/`. The question behind all
+of these, what the commands do against a live environment rather than what the reference says, is
+now answered for `init` and `push`, and open for the rest.
+
+Running both end to end also settled the question the whole template depends on: **a generated
+instruction file can reach a live agent.** Scaffold with `pac copilot init`, write the generated
+`instructions.md` into the scaffolded `agent.mcs.yml`, push. The content arrived with an identical
+SHA-256. Note what that path is not: it does not synthesize workspace files, so it stays inside
+ADR-0002 rule 2. It edits what `pac` already wrote.
 
 **Question 2 was the documentation half of the old question and it is now closed. The workspace
 format is INCIDENTAL.** Microsoft's VS Code extension repository ships a placeholder file admitting
