@@ -29,8 +29,19 @@ spec:
       - windows
       - macos
       - linux
-    # verified stays false until someone records an actual round trip against a real environment.
-    # Setting it true without a test run would make this manifest lie in a machine-readable way.
+    # verified stays false, but the reason changed on 2026-08-25.
+    #
+    # A round trip against a real environment has now been recorded: this template's generated
+    # instructions.md reached a live agent's draft with a matching SHA-256, on macOS with pac
+    # 2.11.2. So the old reason for this flag is spent.
+    #
+    # What holds it false now is that the claims above are wider than the test. Three operating
+    # systems are listed and one was exercised. Two harnesses are listed and whether workspace
+    # commands behave differently for a github-copilot harness agent is still an open Phase 0
+    # question in docs/compatibility.md. Setting this true would generalise one run into six.
+    #
+    # Nobody has yet held a conversation with an agent built from this template and checked that
+    # it refuses to answer beyond its sources. Delivery is proven. Behaviour is not.
     verified: false
     verifiedOn: null
 
