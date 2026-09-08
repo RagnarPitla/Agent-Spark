@@ -11,6 +11,23 @@ A zero-friction agent factory for Microsoft Copilot Studio.
 The landing page source lives in [`site/`](site/) and is dependency-free static HTML. It is live at
 **<https://ragnarpitla.github.io/Agent-Spark/>**.
 
+## Research: computer-use harnesses
+
+The [research notebook](docs/research/README.md) examines when a controlled execution loop with
+computer use is more useful than another chat interface. It includes a [white paper](docs/research/whitepaper.md),
+a [LinkedIn-ready article draft](docs/research/article.md), an annotated source register, original
+editable diagrams, and a [local teaching lab](docs/research/lab.md).
+
+The lab is a deterministic simulation with synthetic data: no LLM, no real browser or desktop
+control, and no tenant operations. It does not implement the proposed `agentspark` CLI or establish
+model performance. The paper treats enterprise value as a testable hypothesis, not a claim that
+computer use is necessary or sufficient for AGI.
+
+Open [`site/research/index.html`](site/research/index.html) locally to read the HTML edition.
+See the [notebook guide](docs/research/README.md) for regeneration commands and the proposed study.
+
+## Website publication
+
 Two things had to hold, and both now do. The repository is public, which is what makes Pages
 available on this account, and it means every tracked file and the full commit history are readable
 by anyone. Pages source is set to "GitHub Actions", and `.github/workflows/pages.yml` deploys from
@@ -90,8 +107,9 @@ schemas/      JSON Schemas for project, template, skill, and evaluation manifest
 templates/    Complete scenario templates, versioned and owned
 skills/       Reusable skill packages with examples and evaluations
 samples/      Example generated output, checked against the schemas
-scripts/      validate.mjs, the only executable code in the repo today
+scripts/      Repository validation, generation proof, and research-page tooling
 site/         Source for the landing page. Dependency-free static HTML.
+labs/         Local teaching simulations, separate from the proposed production CLI
 cli/          Command specification. No implementation.
 packages/     Package contracts. No implementation.
 ```
@@ -108,6 +126,7 @@ packages/     Package contracts. No implementation.
 | [Troubleshooting](docs/troubleshooting.md) | Failure modes and recovery |
 | [Official resources](docs/official-resources.md) | Verified Microsoft Learn index |
 | [ADRs](docs/adr/) | Decisions and their reasoning |
+| [Research notebook](docs/research/README.md) | Computer-use harness paper, article, sources, diagrams, and local lab |
 
 ## Contributing
 

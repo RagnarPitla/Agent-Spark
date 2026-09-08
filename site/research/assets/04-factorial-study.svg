@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 740" role="img" aria-label="A factorial study crosses model snapshots, harness variants and interface access. Paired task instances feed an independent outcome assessment, with uncertainty, human review time, cost and failures reported." style="--cp-bg:#f7f4ef;--cp-surface:#ffffff;--cp-text:#242424;--cp-text-muted:#5c5c5c;--cp-border-strong:#919191;--cp-accent:#b11f4b;--cp-accent-soft:rgba(177,31,75,0.08);font-family:'Segoe UI',Aptos,Calibri,sans-serif;fill:var(--cp-text)">
+<title>Separate the model from the harness</title><desc>A factorial study crosses model snapshots, harness variants and interface access. Paired task instances feed an independent outcome assessment, with uncertainty, human review time, cost and failures reported.</desc>
+<defs><marker id="04-factorial-study-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-border-strong)"/></marker></defs>
+<rect width="1280" height="740" fill="var(--cp-bg)" rx="16"/>
+<text x="40" y="52" font-size="32" font-weight="700">Separate the model from the harness</text>
+<text x="40" y="86" font-size="18" fill="var(--cp-text-muted)">Proposed study design, not experimental results. Freeze tasks, authority and budgets.</text>
+<polyline points="218,280 218,350" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#04-factorial-study-arrow)"/>
+<polyline points="640,280 640,320 430,320 430,350" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#04-factorial-study-arrow)"/>
+<polyline points="1062,280 1062,350" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#04-factorial-study-arrow)"/>
+<polyline points="610,422 670,422" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#04-factorial-study-arrow)"/>
+<polyline points="954,495 954,560" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#04-factorial-study-arrow)"/>
+<rect x="40" y="125" width="355" height="155" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="217.5" y="174.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Model snapshots</text>
+<text x="217.5" y="202.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">M1 and M2</text>
+<text x="217.5" y="230.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Record exact versions</text>
+<rect x="462" y="125" width="355" height="155" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="639.5" y="174.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Harness variants</text>
+<text x="639.5" y="202.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Baseline and recovery-aware</text>
+<text x="639.5" y="230.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Same mandatory safety policy</text>
+<rect x="884" y="125" width="356" height="155" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="1062" y="174.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Interface access</text>
+<text x="1062" y="202.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">API / GUI / hybrid</text>
+<text x="1062" y="230.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Declare what each arm can see</text>
+<rect x="40" y="350" width="570" height="145" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="325" y="394.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Paired task instances and perturbations</text>
+<text x="325" y="422.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">API-complete, UI-only, cross-app, stale-state</text>
+<text x="325" y="450.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Separate reach from competence</text>
+<rect x="670" y="350" width="570" height="145" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="955" y="394.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Independent outcome assessment</text>
+<text x="955" y="422.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Correct state + policy compliance + receipt</text>
+<text x="955" y="450.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Count unsupported and stopped runs explicitly</text>
+<rect x="40" y="560" width="1200" height="105" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="640" y="612.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Report task-level uncertainty, review minutes, latency, execution cost and failure severity</text>
+<text x="40" y="708" font-size="17" fill="var(--cp-text-muted)">A simultaneous model-and-harness upgrade cannot tell you which change caused the gain. Test the factors separately.</text>
+</svg>

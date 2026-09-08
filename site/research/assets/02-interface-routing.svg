@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 770" role="img" aria-label="API-only stops because receipt attachment has no API. GUI-only uses screens throughout. Hybrid attaches the receipt through the GUI and clears the review hold through the API. Each write needs approval and independent verification; this is a conceptual example, not a measured comparison." style="--cp-bg:#f7f4ef;--cp-surface:#ffffff;--cp-text:#242424;--cp-text-muted:#5c5c5c;--cp-border-strong:#919191;--cp-accent:#b11f4b;--cp-accent-soft:rgba(177,31,75,0.08);font-family:'Segoe UI',Aptos,Calibri,sans-serif;fill:var(--cp-text)">
+<title>One workflow, three interface strategies</title><desc>API-only stops because receipt attachment has no API. GUI-only uses screens throughout. Hybrid attaches the receipt through the GUI and clears the review hold through the API. Each write needs approval and independent verification; this is a conceptual example, not a measured comparison.</desc>
+<defs><marker id="02-interface-routing-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-border-strong)"/></marker></defs>
+<rect width="1280" height="770" fill="var(--cp-bg)" rx="16"/>
+<text x="40" y="52" font-size="32" font-weight="700">One workflow, three interface strategies</text>
+<text x="40" y="86" font-size="18" fill="var(--cp-text-muted)">Synthetic invoice exception: receipt attachment has no API. Every write needs approval.</text>
+<polyline points="245,195 285,195" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="540,195 580,195" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="245,395 285,395" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="540,395 580,395" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="870,395 910,395" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="245,595 285,595" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="540,595 580,595" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<polyline points="870,595 910,595" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#02-interface-routing-arrow)"/>
+<rect x="40" y="130" width="205" height="130" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="142.5" y="181" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">API-only</text>
+<text x="142.5" y="209" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Narrow action reach</text>
+<rect x="285" y="130" width="255" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="412.5" y="181" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Read invoice context</text>
+<text x="412.5" y="209" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Structured record</text>
+<rect x="580" y="130" width="660" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="910" y="181" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">STOP: no attachment API</text>
+<text x="910" y="209" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Keep the hold; report unsupported.</text>
+<rect x="40" y="330" width="205" height="130" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="142.5" y="381" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">GUI-only</text>
+<text x="142.5" y="409" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Screen-based route</text>
+<rect x="285" y="330" width="255" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="412.5" y="381" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Read invoice context</text>
+<text x="412.5" y="409" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Through the screen</text>
+<rect x="580" y="330" width="290" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="725" y="381" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Attach accepted receipt</text>
+<text x="725" y="409" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Approved GUI write</text>
+<rect x="910" y="330" width="330" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="1075" y="381" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Clear review hold</text>
+<text x="1075" y="409" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Approved GUI write</text>
+<rect x="40" y="530" width="205" height="130" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="142.5" y="581" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Hybrid</text>
+<text x="142.5" y="609" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Select per step</text>
+<rect x="285" y="530" width="255" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="412.5" y="581" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Read invoice context</text>
+<text x="412.5" y="609" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">API</text>
+<rect x="580" y="530" width="290" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="725" y="581" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Attach accepted receipt</text>
+<text x="725" y="609" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Approved GUI write</text>
+<rect x="910" y="530" width="330" height="130" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="1075" y="581" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Clear review hold</text>
+<text x="1075" y="609" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Approved API write</text>
+<text x="40" y="704" font-size="17" fill="var(--cp-text-muted)">Verify every effect independently of the save message. This is a conceptual route map, not measured performance.</text>
+<text x="40" y="740" font-size="17" fill="var(--cp-text-muted)">No API is a capability gap. No permission is a stop, not an invitation to try the GUI.</text>
+</svg>

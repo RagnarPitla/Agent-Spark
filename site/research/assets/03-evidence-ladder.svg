@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 840" role="img" aria-label="Five evidence levels: artifact conformance, generation correctness, platform delivery, behavioral performance and operational value. Each level requires its own measurements; none follows from the preceding level." style="--cp-bg:#f7f4ef;--cp-surface:#ffffff;--cp-text:#242424;--cp-text-muted:#5c5c5c;--cp-border-strong:#919191;--cp-accent:#b11f4b;--cp-accent-soft:rgba(177,31,75,0.08);font-family:'Segoe UI',Aptos,Calibri,sans-serif;fill:var(--cp-text)">
+<title>Five claims that need different evidence</title><desc>Five evidence levels: artifact conformance, generation correctness, platform delivery, behavioral performance and operational value. Each level requires its own measurements; none follows from the preceding level.</desc>
+<defs><marker id="03-evidence-ladder-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-border-strong)"/></marker></defs>
+<rect width="1280" height="840" fill="var(--cp-bg)" rx="16"/>
+<text x="40" y="52" font-size="32" font-weight="700">Five claims that need different evidence</text>
+<text x="40" y="86" font-size="18" fill="var(--cp-text-muted)">Passing one row never proves the rows below it.</text>
+<polyline points="350,174 390,174" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#03-evidence-ladder-arrow)"/>
+<polyline points="350,304 390,304" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#03-evidence-ladder-arrow)"/>
+<polyline points="350,434 390,434" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#03-evidence-ladder-arrow)"/>
+<polyline points="350,564 390,564" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#03-evidence-ladder-arrow)"/>
+<polyline points="350,694 390,694" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#03-evidence-ladder-arrow)"/>
+<rect x="40" y="120" width="310" height="108" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="195" y="174" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">1. Artifact conformance</text>
+<rect x="390" y="120" width="850" height="108" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="815" y="160" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Schema, references, declared constraints</text>
+<text x="815" y="188" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">A valid manifest can still describe an unsafe or ineffective agent.</text>
+<rect x="40" y="250" width="310" height="108" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="195" y="304" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">2. Generation correctness</text>
+<rect x="390" y="250" width="850" height="108" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="815" y="290" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Files, substitution, preserved content</text>
+<text x="815" y="318" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Correct files are not proof of successful platform delivery.</text>
+<rect x="40" y="380" width="310" height="108" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="195" y="434" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">3. Platform delivery</text>
+<rect x="390" y="380" width="850" height="108" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="815" y="420" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Target identity, version, server-side receipt</text>
+<text x="815" y="448" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">A delivered draft is not proof of correct conversations or actions.</text>
+<rect x="40" y="510" width="310" height="108" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="195" y="564" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">4. Behavioral performance</text>
+<rect x="390" y="510" width="850" height="108" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="815" y="550" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Held-out tasks, repeated runs, policy compliance</text>
+<text x="815" y="578" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">A benchmark result is not proof of viable operational economics.</text>
+<rect x="40" y="640" width="310" height="108" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="195" y="694" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">5. Operational value</text>
+<rect x="390" y="640" width="850" height="108" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="815" y="680" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Review time, incidents, drift, cost per accepted outcome</text>
+<text x="815" y="708" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Measure in the actual workflow, with the actual authority boundary.</text>
+<text x="40" y="800" font-size="17" fill="var(--cp-text-muted)">The browser lab exercises deterministic mechanics only. It does not produce evidence of model or enterprise performance.</text>
+</svg>

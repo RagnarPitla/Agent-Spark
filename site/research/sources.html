@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>(() => {
+  const param = new URLSearchParams(window.location.search).get("scoutTheme");
+  const theme =
+    param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
+})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The evidence, with its limits | Agent Spark research</title>
+<meta name="description" content="An annotated primary-source register for the computer-use harness thesis.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The evidence, with its limits">
+<meta property="og:description" content="An annotated primary-source register for the computer-use harness thesis.">
+<meta property="og:image" content="https://ragnarpitla.github.io/Agent-Spark/research/assets/research-cover.png">
+<meta property="og:url" content="https://ragnarpitla.github.io/Agent-Spark/research/sources.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 32px; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+a { color: var(--cp-link); text-underline-offset: .2em; overflow-wrap: anywhere; }
+a:hover { text-decoration-thickness: 2px; }
+button, select, input { font: inherit; }
+button, select { color: var(--cp-text); background: var(--cp-surface); border: 1px solid var(--cp-border-strong); border-radius: .625rem; padding: 10px 14px; }
+button { cursor: pointer; }
+button:hover { border-color: var(--cp-accent); }
+:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -100px; padding: 12px; background: var(--cp-surface); z-index: 10; }
+.skip-link:focus { top: 12px; }
+.wrap { width: min(1240px, calc(100% - 64px)); margin-inline: auto; }
+.topbar { border-bottom: 1px solid var(--cp-border); }
+.topbar .wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; padding-block: 20px; }
+.brand { color: var(--cp-text); font-weight: 750; text-decoration: none; margin-right: auto; letter-spacing: -.02em; }
+.brand span { display: block; color: var(--cp-text-muted); font-size: 12px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+.nav { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.nav a { font-size: 14px; text-decoration: none; color: var(--cp-text-muted); }
+.nav a[aria-current="page"] { color: var(--cp-accent); font-weight: 700; }
+.theme-label { font-size: 12px; color: var(--cp-text-muted); display: flex; gap: 8px; align-items: center; }
+.theme-label select { padding: 6px 8px; }
+.hero { padding-block: 76px 48px; }
+.eyebrow { color: var(--cp-accent); font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.hero h1 { max-width: 980px; font-size: clamp(36px, 6vw, 76px); line-height: 1.04; letter-spacing: -.055em; margin: 24px 0; font-weight: 750; }
+.hero .lede { max-width: 790px; font-size: clamp(18px, 2.1vw, 24px); line-height: 1.5; color: var(--cp-text-muted); }
+.byline { font-size: 14px; color: var(--cp-text-muted); margin-top: 24px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 16px; }
+.button { display: inline-block; padding: 12px 18px; background: var(--cp-surface); color: var(--cp-text); border: 1px solid var(--cp-border-strong); border-radius: .625rem; text-decoration: none; font-weight: 600; }
+.button.primary { color: var(--cp-accent-fg); background: var(--cp-accent); border-color: var(--cp-accent); }
+.button.primary:hover { background: var(--cp-accent-hover); }
+.notice { padding: 18px 22px; border-left: 3px solid var(--cp-accent); background: var(--cp-accent-soft); line-height: 1.6; font-size: 15px; }
+.notice p { margin: 0; }
+.section { margin-block: 56px; }
+.section h2 { font-size: clamp(26px, 3.3vw, 38px); letter-spacing: -.035em; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.card { padding: 28px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
+.card h3 { font-size: 23px; line-height: 1.25; letter-spacing: -.02em; margin: 16px 0; }
+.card p { line-height: 1.65; color: var(--cp-text-muted); }
+.tag { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; font-weight: 700; color: var(--cp-accent); }
+.card .number { color: var(--cp-accent); font-size: 34px; font-weight: 700; }
+.reading-layout { display: grid; grid-template-columns: minmax(0, 840px) minmax(220px, 1fr); gap: 56px; align-items: start; margin-bottom: 64px; }
+.prose { min-width: 0; font-size: 18px; line-height: 1.8; overflow-wrap: break-word; }
+.prose > h1 { display: none; }
+.prose h2 { font-size: 31px; letter-spacing: -.035em; line-height: 1.2; margin: 60px 0 20px; }
+.prose h3 { font-size: 23px; line-height: 1.3; margin-top: 36px; }
+.prose p { margin: 0 0 22px; }
+.prose ul, .prose ol { padding-left: 24px; margin-bottom: 24px; }
+.prose li { padding-left: 4px; margin-bottom: 10px; }
+.prose li > p { margin-bottom: 8px; }
+.prose blockquote { margin: 28px 0; padding: 20px 26px; border-left: 3px solid var(--cp-accent); background: var(--cp-accent-soft); }
+.prose blockquote p:last-child { margin-bottom: 0; }
+code, pre { font-family: Consolas, "Courier New", Courier, monospace; }
+code { padding: 2px 5px; border-radius: 4px; background: var(--cp-surface-soft); font-size: .88em; overflow-wrap: anywhere; }
+pre { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: .625rem; padding: 20px; overflow: auto; line-height: 1.6; }
+pre code { padding: 0; background: var(--cp-surface); overflow-wrap: normal; }
+.table-scroll { overflow-x: auto; margin: 28px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.6; }
+th, td { padding: 14px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; min-width: 120px; }
+th { background: var(--cp-surface-soft); }
+td { background: var(--cp-surface); }
+.prose img, .figure img { width: 100%; height: auto; display: block; border: 1px solid var(--cp-border); border-radius: 16px; }
+.figure { margin: 24px 0; }
+figcaption { font-size: 14px; color: var(--cp-text-muted); line-height: 1.6; margin-top: 12px; }
+.toc { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; font-size: 13px; padding: 24px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-bg-elevated); }
+.toc h2 { font-size: 15px; margin: 0 0 16px; }
+.toc ol { padding-left: 18px; margin: 0; }
+.toc li { margin-bottom: 12px; padding-left: 2px; }
+.toc a { color: var(--cp-text-muted); text-decoration: none; }
+.source-card { padding: 24px; margin-bottom: 16px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); scroll-margin-top: 24px; overflow-wrap: anywhere; }
+.source-card h2 { margin-top: 12px; font-size: 23px; }
+.source-card p { font-size: 16px; line-height: 1.7; }
+.source-card .limit { border-top: 1px solid var(--cp-border); padding-top: 16px; color: var(--cp-text-muted); }
+.source-card[hidden] { display: none; }
+.filter { display: flex; gap: 16px; align-items: center; margin: 24px 0; flex-wrap: wrap; }
+.calculator { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 32px; }
+.calculator label { display: block; margin-bottom: 24px; line-height: 1.6; }
+.calculator input { display: block; width: 100%; accent-color: var(--cp-accent); margin-top: 12px; }
+.calculator output { display: block; font-size: clamp(42px, 7vw, 80px); font-weight: 750; color: var(--cp-accent); letter-spacing: -.06em; }
+.muted { color: var(--cp-text-muted); font-size: 15px; line-height: 1.7; }
+.cover { aspect-ratio: 1200 / 630; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 6%; display: flex; flex-direction: column; justify-content: space-between; }
+.cover strong { display: block; max-width: 820px; font-size: clamp(24px, 5vw, 68px); line-height: 1.08; letter-spacing: -.05em; }
+.cover .cover-loop { display: flex; gap: 16px; flex-wrap: wrap; font-size: clamp(12px, 1.6vw, 20px); font-weight: 600; color: var(--cp-accent); }
+.footer { padding-block: 32px; border-top: 1px solid var(--cp-border); color: var(--cp-text-muted); font-size: 14px; line-height: 1.6; }
+.footer a { margin-left: 16px; }
+.status { min-height: 24px; color: var(--cp-text-muted); font-size: 14px; }
+html[data-theme="dark"] :is(.byline, .muted, .theme-label, .status, .footer, figcaption, .brand span, .toc a, .nav a:not([aria-current])) { color: var(--cp-text-soft); }
+@media (max-width: 960px) {
+  .grid { grid-template-columns: 1fr; }
+  .reading-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .toc { position: static; max-height: none; grid-row: 1; }
+  .toc ol { columns: 2; column-gap: 28px; }
+  .calculator { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { width: calc(100% - 32px); }
+  .topbar .wrap { gap: 16px; }
+  .nav { gap: 14px; }
+  .hero { padding-block: 44px 32px; }
+  .hero h1 { font-size: 42px; }
+  .prose { font-size: 17px; }
+  .toc ol { columns: 1; }
+  .card, .calculator { padding: 22px; }
+  th, td { padding: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+@media print {
+  .topbar, .toc, .actions, .filter, .theme-label, .skip-link, .calculator, .footer, .status { display: none !important; }
+  body { background: var(--cp-surface); }
+  .wrap { width: 100%; }
+  .hero { padding-block: 0 20px; }
+  .hero h1 { font-size: 36px; }
+  .reading-layout { display: block; }
+  .prose { font-size: 11pt; line-height: 1.5; }
+  .prose h2 { font-size: 19pt; margin-top: 28px; break-after: avoid; }
+  .prose h3 { break-after: avoid; }
+  figure, .source-card { break-inside: avoid; }
+  .table-scroll { overflow: visible; }
+  table { font-size: 9pt; }
+  a { color: var(--cp-text); }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html">Agent Spark<span>Independent research notebook</span></a>
+<nav class="nav" aria-label="Research navigation"><a href="./index.html">Research</a><a href="./whitepaper.html">Paper</a><a href="./article.html">Article</a><a href="./lab.html">Lab</a><a href="./sources.html" aria-current="page">Sources</a><a href="./visuals.html">Visuals</a></nav>
+<label class="theme-label">Theme<select id="theme-picker"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+</div></header>
+<main id="main" class="wrap"><header class="hero"><p class="eyebrow">Annotated source register</p><h1>The evidence,<br>with its limits.</h1>
+<p class="lede">A product manual describes capabilities and constraints. A benchmark measures a bounded setup. Neither establishes a customer outcome.</p>
+<p class="byline">27 public sources / Reviewed 7 September 2026</p></header>
+<div class="filter"><label for="source-filter">Evidence type</label><select id="source-filter"><option value="all">All sources</option>
+<option value="Vendor measurement">Vendor measurement</option><option value="Product documentation">Product documentation</option><option value="Technical explanation">Technical explanation</option><option value="Vendor case study">Vendor case study</option><option value="Artifact inspection">Artifact inspection</option><option value="Repository-reported observation">Repository-reported observation</option><option value="Design proposal">Design proposal</option><option value="Research paper">Research paper</option><option value="Benchmark maintenance report">Benchmark maintenance report</option><option value="Theoretical paper">Theoretical paper</option><option value="Risk-management guidance">Risk-management guidance</option><option value="Technical documentation">Technical documentation</option></select>
+<span id="source-count" class="muted" aria-live="polite">27 sources shown</span></div><article class="source-card" id="s01" data-source-kind="Vendor measurement">
+<span class="tag">S01 / Vendor measurement</span>
+<h2><a href="https://openai.com/index/gpt-6-astra/">GPT-6 Astra: A new generation of intelligence</a></h2>
+<p class="muted">OpenAI / 2026 announcement; accessed 7 September 2026 (8 September UTC)</p>
+<p>The public model name is GPT-6 Astra, compared with GPT-5.6 Sol. OpenAI reports 72.6 versus 65.7 on OSWorld 2.0 v2026.08.08, offline set, partial score, and describes a separate Codex harness speed update. Its latency comparison is explicitly a simulation.</p><p class="limit"><strong>What this does not establish:</strong> These are vendor-reported results under described research settings, not an independently reproduced enterprise deployment. Partial score is not the percentage of complete workflows. The simultaneous model and harness changes do not isolate either causal contribution. Maximum-effort scores and production behavior can differ.</p>
+</article>
+<article class="source-card" id="s02" data-source-kind="Product documentation">
+<span class="tag">S02 / Product documentation</span>
+<h2><a href="https://developers.openai.com/codex/computer-use">Computer Use</a></h2>
+<p class="muted">OpenAI developer documentation / Living documentation, accessed 7 September 2026</p>
+<p>In supported regions, desktop Computer Use is documented for macOS and Windows in ChatGPT Work and Codex. It can operate graphical applications; the documentation prefers dedicated plugins or MCP servers for data access and repeatable operations when available. OS permissions, app approvals and workspace controls are distinct.</p><p class="limit"><strong>What this does not establish:</strong> This describes desktop product surfaces, not automatic feature parity with every CLI, API, account or operating system. Windows operation uses the active desktop. Native-app changes may fall outside a project's review pane. App permission is not blanket permission for every consequential action.</p>
+</article>
+<article class="source-card" id="s03" data-source-kind="Technical explanation">
+<span class="tag">S03 / Technical explanation</span>
+<h2><a href="https://openai.com/index/unrolling-the-codex-agent-loop/">Unrolling the Codex agent loop</a></h2>
+<p class="muted">OpenAI / 2026 technical article, accessed 7 September 2026</p>
+<p>Codex orchestrates user input, model inference, tool calls, tool results and context management. Its output can be changed files rather than only an assistant message. This supplies a concrete working definition of a harness.</p><p class="limit"><strong>What this does not establish:</strong> It is a dated implementation account. Specific API and context-management choices can change; the later Astra announcement describes further context changes. It is not evidence that all adapters share the same sandbox.</p>
+</article>
+<article class="source-card" id="s04" data-source-kind="Vendor case study">
+<span class="tag">S04 / Vendor case study</span>
+<h2><a href="https://openai.com/index/harness-engineering/">Harness engineering: leveraging Codex in an agent-first world</a></h2>
+<p class="muted">OpenAI / 2026 case study, accessed 7 September 2026</p>
+<p>The authors describe exposing a per-worktree application, DOM snapshots, screenshots, logs and metrics to Codex. They emphasize repository knowledge, mechanically enforced boundaries and feedback loops, and explicitly limit generalization beyond their engineered environment.</p><p class="limit"><strong>What this does not establish:</strong> This is a self-reported internal-product case study, not a randomized productivity study. Its estimated speedup is not an established return on investment for other enterprises. It does not demonstrate that GUI use caused all of the reported benefit.</p>
+</article>
+<article class="source-card" id="s05" data-source-kind="Product documentation">
+<span class="tag">S05 / Product documentation</span>
+<h2><a href="https://developers.openai.com/codex/enterprise/managed-configuration">Managed configuration</a></h2>
+<p class="muted">OpenAI developer documentation / Living documentation, accessed 7 September 2026</p>
+<p>Administrators can constrain supported browser and computer-use surfaces, including origins, native app identities and approvals. The document distinguishes command-network controls from browser checks and other tool traffic, and warns that supported requirements differ by client and version.</p><p class="limit"><strong>What this does not establish:</strong> A configured allow rule does not install a plugin, grant OS permission, or replace action approval. A command proxy is not a universal egress or DLP boundary across native apps, MCP, cloud tools and connectors. Customer deployments require effective-policy testing.</p>
+</article>
+<article class="source-card" id="s06" data-source-kind="Vendor measurement">
+<span class="tag">S06 / Vendor measurement</span>
+<h2><a href="https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/">How enabling two settings tripled our scores on the ARC-AGI-3 benchmark</a></h2>
+<p class="muted">OpenAI / 2026 experiment report, accessed 7 September 2026</p>
+<p>For the same named GPT-5.6 Sol model, OpenAI reports public-set ARC-AGI-3 Relative Human Action Efficiency scores of 13.3 with the official harness and 38.3 with a Responses API harness retaining reasoning and using compaction. The task returns text representations of game frames. The report illustrates dependence on context handling as well as the model.</p><p class="limit"><strong>What this does not establish:</strong> The metric is action efficiency, not a percentage of enterprise workflows completed. This is a vendor comparison, not this paper's experiment. The two context changes are bundled, and the report also notes token-versus-character window accounting. It neither isolates all factors nor establishes desktop GUI use as necessary for intelligence.</p>
+</article>
+<article class="source-card" id="s07" data-source-kind="Artifact inspection">
+<span class="tag">S07 / Artifact inspection</span>
+<h2><a href="https://github.com/RagnarPitla/Agent-Spark/tree/0fa8c409a9ed79850b0159fca864ef0ac18e5dd1">Agent Spark repository snapshot</a></h2>
+<p class="muted">Ragnar Pitla / Agent Spark / Commit 0fa8c409a9ed79850b0159fca864ef0ac18e5dd1, 25 August 2026; inspected 7 September 2026</p>
+<p>The inspected snapshot contains a scenario template, a skill, four JSON Schemas, validation and generation-proof scripts, and proposed CLI/package contracts. README, scripts/validate.mjs, scripts/proof-run.mjs and the manifests establish the boundary between content tooling and an unimplemented runtime.</p><p class="limit"><strong>What this does not establish:</strong> Artifacts and executable static checks do not establish live model behavior or operational value. The public site is positioning, not an independent study. This paper does not promote a planned CLI to implemented status.</p>
+</article>
+<article class="source-card" id="s08" data-source-kind="Artifact inspection">
+<span class="tag">S08 / Artifact inspection</span>
+<h2><a href="https://github.com/RagnarPitla/Agent-Spark/blob/0fa8c409a9ed79850b0159fca864ef0ac18e5dd1/templates/knowledge-assistant/template.yaml">Knowledge Assistant template manifest</a></h2>
+<p class="muted">Ragnar Pitla / Agent Spark / Pinned 25 August 2026 snapshot; inspected 7 September 2026</p>
+<p>The manifest declares eight variables, eight output files, pinned skill content, publishing disabled, ownership and provenance. compatibility.verified remains false because its OS and harness claims exceed the reported round trip; comments explicitly distinguish delivery from behavior.</p><p class="limit"><strong>What this does not establish:</strong> A declaration of human confirmation is not a production approval mechanism. The template does not itself connect knowledge or prove that a model obeys its source restrictions.</p>
+</article>
+<article class="source-card" id="s09" data-source-kind="Repository-reported observation">
+<span class="tag">S09 / Repository-reported observation</span>
+<h2><a href="https://github.com/RagnarPitla/Agent-Spark/blob/0fa8c409a9ed79850b0159fca864ef0ac18e5dd1/docs/compatibility.md">Agent Spark compatibility observations</a></h2>
+<p class="muted">Ragnar Pitla / Agent Spark / Reports observations from 25 August 2026 with PAC 2.11.2 on macOS</p>
+<p>The repository reports that generated instruction content reached a server-side draft with an identical SHA-256, and that some tenant effects differed from local command-name expectations. This illustrates why delivery receipts, target identity and published state need separate observation.</p><p class="limit"><strong>What this does not establish:</strong> These observations were not rerun for this paper. They concern a particular version and environment, are not proof of the current platform's universal behavior, and contain no behavioral or customer-ROI evaluation.</p>
+</article>
+<article class="source-card" id="s10" data-source-kind="Design proposal">
+<span class="tag">S10 / Design proposal</span>
+<h2><a href="https://github.com/RagnarPitla/Agent-Spark/blob/0fa8c409a9ed79850b0159fca864ef0ac18e5dd1/docs/adr/0003-plan-first-execution.md">ADR-0003: Separate planning from execution</a></h2>
+<p class="muted">Ragnar Pitla / Agent Spark / Accepted design decision dated 24 August 2026, in the pinned snapshot</p>
+<p>The project proposes reviewable plans followed by execution, serializable changes and checkpoints. It explicitly trades adaptive execution for predictability. The paper uses it to discuss how bounded adaptation would need a separate design decision.</p><p class="limit"><strong>What this does not establish:</strong> An accepted ADR is not implemented software. Checkpoints do not imply transaction rollback or exactly-once remote effects. The paper's adaptive-harness proposal does not silently amend this ADR.</p>
+</article>
+<article class="source-card" id="s11" data-source-kind="Research paper">
+<span class="tag">S11 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2404.07972v2">OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</a></h2>
+<p class="muted">Tianbao Xie et al.; NeurIPS 2024, Datasets and Benchmarks / Original OSWorld paper, arXiv revision 2, 30 May 2024; accessed 7 September 2026</p>
+<p>The original benchmark studies desktop, browser, file and cross-application tasks in virtual machines, using task-specific state evaluators. It exposes grounding, application-knowledge and multistep difficulties. Observation variants include screenshots, accessibility trees and Set-of-Marks.</p><p class="limit"><strong>What this does not establish:</strong> Revision 2 of this paper is not OSWorld 2.0. Its task set, grading and historical results must not be transferred to the Astra comparison. It is not inherently pixel-only, permits fractional rewards, and is not an enterprise field study. A screenshot-only future is an author conjecture, not a result established by the benchmark.</p>
+</article>
+<article class="source-card" id="s12" data-source-kind="Research paper">
+<span class="tag">S12 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2307.13854v4">WebArena: A Realistic Web Environment for Building Autonomous Agents</a></h2>
+<p class="muted">Shuyan Zhou et al.; ICLR 2024 / ArXiv revision 4, 16 April 2024; accessed 7 September 2026</p>
+<p>A resettable environment of realistic web applications connects natural-language intent to measurable state changes. It supports HTML, accessibility-tree and screenshot observations and element-targeted or coordinate actions. Its evaluation includes answer, URL and page-content checks.</p><p class="limit"><strong>What this does not establish:</strong> Controlled replicas and curated intents do not measure live-site robustness or customer economics. Some semantic answer matching uses an LLM judge. Describing every evaluation as deterministic or every observation as visual would be inaccurate.</p>
+</article>
+<article class="source-card" id="s13" data-source-kind="Research paper">
+<span class="tag">S13 / Research paper</span>
+<h2><a href="https://proceedings.mlr.press/v235/drouin24a.html">WorkArena: How Capable are Web Agents at Solving Common Knowledge Work Tasks?</a></h2>
+<p class="muted">Alexandre Drouin et al.; ICML 2024, PMLR 235:11642-11662 / 2024 proceedings; arXiv revision 5 also read, 23 July 2024</p>
+<p>WorkArena studies 33 atomic task types in ServiceNow, including forms, lists, knowledge, catalogs, dashboards and navigation. Its interface and memory ablations show that extra coordinate capabilities or retaining previous reasoning did not help uniformly in the tested configurations; memory could reinforce mistakes.</p><p class="limit"><strong>What this does not establish:</strong> It is a platform-specific benchmark, not a customer study. The historical ablations do not prove that vision or memory is generally harmful, and should not be generalized to different 2026 models or context-retention mechanisms.</p>
+</article>
+<article class="source-card" id="s14" data-source-kind="Research paper">
+<span class="tag">S14 / Research paper</span>
+<h2><a href="https://arxiv.org/pdf/2407.05291v2">WorkArena++: Towards Compositional Planning and Reasoning-based Common Knowledge Work Tasks</a></h2>
+<p class="muted">Leo Boisvert et al.; NeurIPS 2024, Datasets and Benchmarks / ArXiv revision 2, 5 February 2025; accessed 7 September 2026</p>
+<p>The study presents 341 workflows in two formulations, yielding 682 tasks. One formulation provides explicit instructions; the other requires recovering a procedure from a knowledge base. Error analysis includes mistaken goals, invented actions, imagined progress and ineffective repetition.</p><p class="limit"><strong>What this does not establish:</strong> The workflows and company procedures are curated on one platform. The onboarding example is a benchmark analogue, not proof of a cross-application customer deployment. Its historical scores are not current frontier-model performance claims.</p>
+</article>
+<article class="source-card" id="s15" data-source-kind="Research paper">
+<span class="tag">S15 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2510.24563v2">OSWorld-MCP: Benchmarking MCP Tool Invocation In Computer-Use Agents</a></h2>
+<p class="muted">Hongrui Jia, Jitong Liao, Xi Zhang et al.; authors report ICLR 2026 acceptance / ArXiv revision 2, 11 November 2025; accessed 7 September 2026</p>
+<p>A study of 361 OSWorld-derived tasks and 158 curated application tools compares GUI-only with GUI-plus-MCP configurations. Under its GUI-Owl setup, 15/50-step limits and three runs per configuration, structured tools generally improve completion and reduce action counts. It is direct evidence for studying hybrid interfaces.</p><p class="limit"><strong>What this does not establish:</strong> This is not an API-only versus hybrid comparison. Equal action budgets are not equal latency or cost budgets; curated tool coverage limits generalization. Tool Invocation Rate incorporates success into its definition, so its association with accuracy is not an independent causal result. The cited text is the arXiv revision; final proceedings were not independently inspected.</p>
+</article>
+<article class="source-card" id="s16" data-source-kind="Benchmark maintenance report">
+<span class="tag">S16 / Benchmark maintenance report</span>
+<h2><a href="https://xlang.ai/blog/osworld-verified">OSWorld-Verified maintainer report</a></h2>
+<p class="muted">OSWorld / xlang maintainers / Maintainer report, accessed 7 September 2026</p>
+<p>The maintainers document benchmark repairs involving ambiguous instructions, valid solutions rejected by evaluators, timing, websites and environment failures. The report motivates pinning tasks, graders and infrastructure instead of treating a benchmark name as a complete specification.</p><p class="limit"><strong>What this does not establish:</strong> This report concerns repairs to the original OSWorld line. It does not establish the task set or configuration of OSWorld 2.0 v2026.08.08. Evidence of a grader defect is not proof that every model score is invalid.</p>
+</article>
+<article class="source-card" id="s17" data-source-kind="Research paper">
+<span class="tag">S17 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2406.12045v1">tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains</a></h2>
+<p class="muted">Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan; ICLR 2025 / ArXiv revision 1, 17 June 2024; accessed 7 September 2026</p>
+<p>Synthetic retail and airline tasks combine a simulated user, policies, API tools and mutable databases. The paper introduces pass^k for all-k-trials success and distinguishes it from pass@k. It explicitly notes that a successful final-state reward can conceal a policy violation such as acting without confirmation.</p><p class="limit"><strong>What this does not establish:</strong> Correct final state does not establish a compliant action path. Simplified domains and an LLM user simulator limit realism. The paper also shows semantic and policy errors without a GUI; removing visual difficulty does not solve agency.</p>
+</article>
+<article class="source-card" id="s18" data-source-kind="Research paper">
+<span class="tag">S18 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2503.14499v4">Measuring AI Ability to Complete Long Software Tasks</a></h2>
+<p class="muted">Thomas Kwa et al.; METR; NeurIPS 2025 / ArXiv revision 4, 10 July 2026; accessed 7 September 2026</p>
+<p>The study evaluates model-plus-scaffold systems on software, cybersecurity and ML-engineering tasks, primarily through Python and Bash. It relates success probability to human task duration and discusses messier tasks, resource limits and external validity.</p><p class="limit"><strong>What this does not establish:</strong> A time horizon is a fitted human-duration measure at a specified success probability, not autonomous wall-clock runtime. The result is not an enterprise reliability guarantee or proof of AGI. Dynamic, multi-actor workflows without automatic graders can differ materially.</p>
+</article>
+<article class="source-card" id="s19" data-source-kind="Theoretical paper">
+<span class="tag">S19 / Theoretical paper</span>
+<h2><a href="https://arxiv.org/html/0712.3329v1">Universal Intelligence: A Definition of Machine Intelligence</a></h2>
+<p class="muted">Shane Legg and Marcus Hutter; Minds &amp; Machines 17(4), 391-444 / 2007; arXiv revision 1, 20 December 2007</p>
+<p>A proposed formalization models agents acting and receiving observations and rewards across environments. The communication channels are abstract rather than intrinsically graphical, helping separate environment interaction from one particular interface.</p><p class="limit"><strong>What this does not establish:</strong> This is a theoretical proposal, not a universally accepted operational AGI test, a GUI requirement, or evidence that any deployed model meets the definition.</p>
+</article>
+<article class="source-card" id="s20" data-source-kind="Research paper">
+<span class="tag">S20 / Research paper</span>
+<h2><a href="https://arxiv.org/html/2412.05467v4">The BrowserGym Ecosystem for Web Agent Research</a></h2>
+<p class="muted">Thibault Le Sellier de Chezelles et al.; authors' publication entry identifies TMLR 2025 / ArXiv revision 4, 28 February 2025; accessed 7 September 2026</p>
+<p>BrowserGym supplies a common environment and experiment-management system with DOM/accessibility data, screenshots, actions, errors and reproducibility tooling. It explains how observations, tools and scaffolds affect the evaluated system, and discusses drift, localization, bot detection and shared-state limitations.</p><p class="limit"><strong>What this does not establish:</strong> Its comparison does not use visual inputs outside VisualWebArena; its tables must not all be described as vision-based evaluations. Some table entries are not newly executed runs. Publication status was checked against the authors' repository because the OpenReview page presented a browser challenge.</p>
+</article>
+<article class="source-card" id="s21" data-source-kind="Product documentation">
+<span class="tag">S21 / Product documentation</span>
+<h2><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview">Harnesses in Copilot Studio</a></h2>
+<p class="muted">Microsoft Learn / Page updated 5 September 2026; accessed 7 September 2026</p>
+<p>Microsoft defines a harness as the runtime governing model calls, supplied context, interpretation and tool invocation. It documents different harnesses for different workloads, including file creation and editing for the GitHub Copilot harness.</p><p class="limit"><strong>What this does not establish:</strong> Agents and harnesses are not competing categories; a harness powers an agent. Do not combine capabilities from different harnesses into an assumed universal runtime or infer geographic rollout or GA from a page-update date. This is documentation, not a performance audit.</p>
+</article>
+<article class="source-card" id="s22" data-source-kind="Product documentation">
+<span class="tag">S22 / Product documentation</span>
+<h2><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use">Automate web and desktop apps with computer use</a></h2>
+<p class="muted">Microsoft Learn / Page updated 3 August 2026; accessed 7 September 2026</p>
+<p>The page documents Windows GUI interaction with virtual mouse and keyboard, including applications without APIs, and explicitly scopes its computer-use features to the standard harness. It describes credentials, logs, screenshots, HTTPS enforcement and application/website action restrictions.</p><p class="limit"><strong>What this does not establish:</strong> Maker-provided credentials are the documented default; sharing can expose the maker's execution authority. The action allowlist does not prevent opening an unapproved surface and is not a universal egress boundary. The documented controls and execution mode must be assessed for the actual deployment.</p>
+</article>
+<article class="source-card" id="s23" data-source-kind="Product documentation">
+<span class="tag">S23 / Product documentation</span>
+<h2><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/configure-where-computer-use-runs">Configure where computer use runs</a></h2>
+<p class="muted">Microsoft Learn / Page updated 3 August 2026; accessed 7 September 2026</p>
+<p>The page distinguishes hosted browser, Cloud PC pools and customer-managed Windows machines. Hosted-browser and Cloud-PC-pool sections carry preview notices, while customer-managed machines have their own registration and software prerequisites.</p><p class="limit"><strong>What this does not establish:</strong> The hosted browser is not recommended for production and does not provide tenant Entra join, Intune management, enterprise-resource access or custom desktop applications. Those restrictions must not be transferred indiscriminately to every execution mode. The source does not establish universal geographic or tenant availability.</p>
+</article>
+<article class="source-card" id="s24" data-source-kind="Product documentation">
+<span class="tag">S24 / Product documentation</span>
+<h2><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/faqs-computer-use">FAQ for the computer use tool</a></h2>
+<p class="muted">Microsoft Learn / Page updated 20 May 2026; accessed 7 September 2026</p>
+<p>The FAQ describes a perception-reasoning-action loop and documents variable outcomes, timing and visual sensitivity, difficult controls, loops and prompt-injection risks. It explicitly warns that model-triggered supervision is probabilistic, not a guaranteed approval gate or safety fail-safe.</p><p class="limit"><strong>What this does not establish:</strong> The FAQ excludes making financial transactions among intended uses. A human approval prompt does not erase that boundary. Its dated success figures lack enough experimental detail for a current ranking, enterprise guarantee or SLA; this paper does not use them.</p>
+</article>
+<article class="source-card" id="s25" data-source-kind="Risk-management guidance">
+<span class="tag">S25 / Risk-management guidance</span>
+<h2><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf">Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile</a></h2>
+<p class="muted">Chloe Autio et al.; NIST AI 600-1 / Published 26 July 2024; accessed 7 September 2026</p>
+<p>MS-2.3-003 recommends sharing predeployment results with release-approval authorities. MS-2.5-001 warns against extrapolation from narrow or anecdotal assessments. MS-2.5-006 recommends revisiting guardrails and original deployment-safety judgments.</p><p class="limit"><strong>What this does not establish:</strong> Voluntary, context-dependent guidance, not certification of an artifact or a prescribed harness architecture. A later update to a publication landing page does not create a new edition of the 2024 profile.</p>
+</article>
+<article class="source-card" id="s26" data-source-kind="Risk-management guidance">
+<span class="tag">S26 / Risk-management guidance</span>
+<h2><a href="https://github.com/OWASP/www-project-top-10-for-large-language-model-applications/blob/79c180515d6500c8a66627fa8343bd514c464380/2_0_vulns/LLM06_ExcessiveAgency.md">LLM06:2025 Excessive Agency</a></h2>
+<p class="muted">OWASP GenAI Security Project / 2025 edition; public source pinned to commit 79c180515d6500c8a66627fa8343bd514c464380</p>
+<p>The guidance recommends minimum necessary functionality and permissions, user-context execution, approval for high-impact actions, and authorization enforced downstream rather than entrusted to an LLM's judgment. Relevant mitigation passages are at lines 64-78.</p><p class="limit"><strong>What this does not establish:</strong> This is mitigation guidance, not a finding that a particular product is vulnerable or that a declared policy is enforced. The pinned project source avoids the website's misleading legacy URL slug.</p>
+</article>
+<article class="source-card" id="s27" data-source-kind="Technical documentation">
+<span class="tag">S27 / Technical documentation</span>
+<h2><a href="https://developer.hashicorp.com/terraform/cli/commands/plan">Terraform CLI: plan command</a></h2>
+<p class="muted">HashiCorp / Living documentation, accessed 7 September 2026</p>
+<p>Established prior art for previewing intended changes, optionally saving a plan, and applying a reviewed plan later. The documentation warns that changes in the target system can invalidate expectations from an earlier speculative plan.</p><p class="limit"><strong>What this does not establish:</strong> This is not evidence that an LLM's proposed trajectory predicts future GUI state, that planning has no possible incidental effects, or that a previously approved action remains authorized after its assumptions change.</p>
+</article></main>
+<footer class="footer"><div class="wrap">Ragnar Pitla. Original community research, not a Microsoft or OpenAI product.
+<a href="https://github.com/RagnarPitla/Agent-Spark">GitHub repository</a>
+<a href="./sources.json" download>Evidence register (JSON)</a>
+<p>Evidence reviewed 7 September 2026, America/New_York (8 September UTC). Research draft; no claim of peer review or institutional affiliation.</p>
+</div></footer>
+<script>
+const themePicker = document.getElementById('theme-picker');
+themePicker.value = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+themePicker.addEventListener('change', () => {
+  document.documentElement.dataset.theme = themePicker.value;
+});
+document.querySelectorAll('[data-print]').forEach((button) =>
+  button.addEventListener('click', () => window.print()));
+let themeBeforePrint = null;
+window.addEventListener('beforeprint', () => {
+  themeBeforePrint ??= document.documentElement.dataset.theme;
+  document.documentElement.dataset.theme = 'light';
+});
+window.addEventListener('afterprint', () => {
+  if (themeBeforePrint !== null) document.documentElement.dataset.theme = themeBeforePrint;
+  themeBeforePrint = null;
+});
+const copyButton = document.getElementById('copy-article');
+if (copyButton) {
+  copyButton.addEventListener('click', async () => {
+    const status = document.getElementById('copy-status');
+    if (!navigator.clipboard) {
+      status.textContent = 'Clipboard unavailable here. Download the Markdown file or select the article text.';
+      return;
+    }
+    try {
+      const title = document.querySelector('.hero h1').innerText;
+      await navigator.clipboard.writeText(title + '\n\n' + document.getElementById('article-body').innerText);
+      status.textContent = 'Article copied. Review references and formatting before publishing.';
+    } catch (error) {
+      if (!(error instanceof DOMException)) throw error;
+      status.textContent = 'Copy failed (' + error.name + '). Download the Markdown file or select the article text.';
+    }
+  });
+}
+const sourceFilter = document.getElementById('source-filter');
+if (sourceFilter) {
+  sourceFilter.addEventListener('change', () => {
+    let visible = 0;
+    document.querySelectorAll('[data-source-kind]').forEach((card) => {
+      card.hidden = sourceFilter.value !== 'all' && card.dataset.sourceKind !== sourceFilter.value;
+      if (!card.hidden) visible += 1;
+    });
+    document.getElementById('source-count').textContent = visible + ' sources shown';
+  });
+}
+const stepInput = document.getElementById('step-probability');
+if (stepInput) {
+  const countInput = document.getElementById('step-count');
+  const update = () => {
+    const probability = Number(stepInput.value) / 100;
+    const count = Number(countInput.value);
+    document.getElementById('probability-label').textContent = stepInput.value + '%';
+    document.getElementById('count-label').textContent = countInput.value;
+    document.getElementById('compound-result').textContent = (100 * probability ** count).toFixed(1) + '%';
+    document.getElementById('compound-formula').textContent = probability.toFixed(2) + ' raised to ' + count + ', assuming identical independent steps and no recovery.';
+  };
+  stepInput.addEventListener('input', update);
+  countInput.addEventListener('input', update);
+  update();
+}
+</script>
+</body>
+</html>
