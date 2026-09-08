@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 700" role="img" aria-label="An outcome contract feeds an observe, propose, gate, act and verify loop. API, browser and desktop adapters operate within one authority boundary. A failed postcondition returns to observation, not blind replay." style="--cp-bg:#f7f4ef;--cp-surface:#ffffff;--cp-text:#242424;--cp-text-muted:#5c5c5c;--cp-border-strong:#919191;--cp-accent:#b11f4b;--cp-accent-soft:rgba(177,31,75,0.08);font-family:'Segoe UI',Aptos,Calibri,sans-serif;fill:var(--cp-text)">
+<title>The product is the closed loop</title><desc>An outcome contract feeds an observe, propose, gate, act and verify loop. API, browser and desktop adapters operate within one authority boundary. A failed postcondition returns to observation, not blind replay.</desc>
+<defs><marker id="01-execution-loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-border-strong)"/></marker></defs>
+<rect width="1280" height="700" fill="var(--cp-bg)" rx="16"/>
+<text x="40" y="52" font-size="32" font-weight="700">The product is the closed loop</text>
+<text x="40" y="86" font-size="18" fill="var(--cp-text-muted)">A proposed architecture. The model proposes; external controls authorize and observe.</text>
+<polyline points="144,220 144,285" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<polyline points="248,347 288,347" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<polyline points="496,347 536,347" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<polyline points="744,347 784,347" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<polyline points="992,347 1032,347" fill="none" stroke="var(--cp-border-strong)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<polyline points="1136,410 1136,458 144,458 144,410" fill="none" stroke="var(--cp-accent)" stroke-width="2" marker-end="url(#01-execution-loop-arrow)"/>
+<rect x="40" y="115" width="1200" height="105" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="640" y="167.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Outcome contract: target, permitted change, evidence, stop conditions</text>
+<rect x="40" y="285" width="208" height="125" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="144" y="333.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Observe</text>
+<text x="144" y="361.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Fresh state + identity</text>
+<rect x="288" y="285" width="208" height="125" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="392" y="333.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Propose</text>
+<text x="392" y="361.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Next bounded action</text>
+<rect x="536" y="285" width="208" height="125" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="640" y="333.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Gate</text>
+<text x="640" y="361.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Policy + exact consent</text>
+<rect x="784" y="285" width="208" height="125" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="888" y="333.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Act</text>
+<text x="888" y="361.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">One permitted effect</text>
+<rect x="1032" y="285" width="208" height="125" rx="14" fill="var(--cp-accent-soft)" stroke="var(--cp-accent)"/>
+<text x="1136" y="333.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Verify</text>
+<text x="1136" y="361.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Read postcondition</text>
+<rect x="40" y="510" width="660" height="125" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="370" y="558.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Adapters, not interchangeable permissions</text>
+<text x="370" y="586.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">API / MCP   |   browser semantics   |   desktop GUI</text>
+<rect x="740" y="510" width="500" height="125" rx="14" fill="var(--cp-surface)" stroke="var(--cp-border-strong)"/>
+<text x="990" y="558.5" text-anchor="middle" dominant-baseline="middle" font-size="21" font-weight="600">Run state and evidence</text>
+<text x="990" y="586.5" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="400">Targets, receipts, budgets, recovery history</text>
+<text x="390" y="448" font-size="17" fill="var(--cp-text-muted)">Mismatch: re-observe, re-plan, re-authorize. Stop when the budget expires.</text>
+</svg>

@@ -1,0 +1,95 @@
+{
+  "title": "Computer-use harness study",
+  "status": "proposed-not-run",
+  "version": "0.1.0",
+  "scope": "Synthetic and explicitly authorized test environments only. No production customer transactions.",
+  "objective": "Separate interface reach, model capability, harness behavior, and operational value.",
+  "factors": {
+    "model": ["pinned-model-snapshot-1", "pinned-model-snapshot-2"],
+    "interface": ["api-only", "gui-only", "hybrid"],
+    "harness": ["policy-compliant-baseline", "policy-compliant-recovery-aware"]
+  },
+  "invariants": [
+    "The same authorization policy applies to every arm.",
+    "Interface unavailability is not permission denial.",
+    "Record the exact model, harness, tool and benchmark revisions.",
+    "Declare accessible API fields, DOM/accessibility data, screenshots and evaluator state separately.",
+    "Do not expose hidden evaluator state to the agent.",
+    "Pair task instances across arms and randomize execution order.",
+    "Hold out task templates as well as record values.",
+    "Report correct policy stops separately from completed business work.",
+    "Record human actions, retries, stopped runs, unsupported tasks and all failures.",
+    "Determine the main sample size and repetition count after a variance-estimating pilot.",
+    "Do not change hypotheses or primary metrics after inspecting held-out outcomes."
+  ],
+  "taskStrata": [
+    "api-complete",
+    "ui-only",
+    "cross-application",
+    "permission-denied",
+    "stale-state",
+    "misleading-document-content",
+    "apparent-save-without-persistence"
+  ],
+  "primaryMetrics": [
+    "authorized-verified-completion-rate",
+    "prohibited-action-attempt-rate",
+    "unauthorized-effect-rate",
+    "human-active-review-minutes-per-accepted-outcome",
+    "total-cost-per-accepted-outcome"
+  ],
+  "secondaryMetrics": [
+    "interface-reach",
+    "completion-on-common-reachable-subset",
+    "p50-and-p95-wall-clock-time",
+    "bounded-recovery-success",
+    "duplicate-effect-rate",
+    "task-level-repeatability",
+    "verification-false-positive-rate"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "claim": "Hybrid access increases authorized verified completion on a heterogeneous task mix relative to API-only access.",
+      "comparison": "Fix the model and harness; compare paired API-only and hybrid runs.",
+      "falsifier": "Coverage gains vanish on the target task mix, or additional GUI failures erase the gain.",
+      "caveat": "Report the common-reachable subset separately so designed-in API gaps do not masquerade as better reasoning."
+    },
+    {
+      "id": "H2",
+      "claim": "Postcondition-aware bounded recovery improves outcome reliability under stale-state and nonpersistent-save conditions.",
+      "comparison": "Fix model and interface; compare two harnesses with identical mandatory authorization controls.",
+      "falsifier": "Recovery does not improve verified completion, causes duplicate effects, or adds unacceptable review cost.",
+      "caveat": "Disabling mandatory safety controls is not a valid production baseline."
+    },
+    {
+      "id": "H3",
+      "claim": "Harness design and model choice have measurable, potentially interacting effects.",
+      "comparison": "Cross two pinned model snapshots with the two harness variants on the same task instances.",
+      "falsifier": "The harness effect is negligible at the chosen precision or disappears with a stronger model.",
+      "caveat": "A simultaneous model and harness upgrade cannot identify either causal contribution."
+    },
+    {
+      "id": "H4",
+      "claim": "An outcome contract and auditable evidence reduce total human handling cost for a bounded workflow.",
+      "comparison": "Compare the candidate system with a documented human-assisted baseline using blinded outcome review where feasible.",
+      "falsifier": "Review, exception handling and maintenance cost exceed the value of the accepted work.",
+      "caveat": "Benchmark gains alone do not establish enterprise return on investment."
+    }
+  ],
+  "excludedConclusions": [
+    "GUI computer use is necessary or sufficient for AGI.",
+    "The simulator establishes any model's reliability.",
+    "More autonomy is always better.",
+    "A missing API authorizes bypassing access policy.",
+    "Any vendor has won the enterprise market."
+  ],
+  "analysis": {
+    "unit": "task instance, with repeated runs nested within task and task families identified",
+    "uncertainty": "Cluster intervals at the task or task-template level appropriate to the sampling design; do not treat repeated seeds as independent task samples.",
+    "missingness": "Report unavailable, unsupported, stopped, failed and completed outcomes separately.",
+    "cost": "Include unsuccessful runs, infrastructure, model use, active review, recovery and maintenance; amortization assumptions must be explicit.",
+    "reporting": "Publish the protocol, task provenance, configurations, redacted traces, all aggregate outcomes and negative results."
+  },
+  "results": null
+}
