@@ -38,6 +38,8 @@ Then open `http://127.0.0.1:8767/research/`.
 
 The Markdown files in this directory are the prose source of truth. `sources.json` generates `sources.md`, the HTML register, and the marked bibliography region at the end of each document. Edit prose outside those regions. `scripts/research-figures.mjs` generates SVG and Excalidraw files. `scripts/build-research.mjs` generates the reading pages and downloadable Markdown copies. The lab has its own source and generator, described in [lab.md](lab.md).
 
+The site also includes generated `sources.md` and `lab.md` companions beside the downloadable papers so their relative references resolve.
+
 PNG exports are presentation assets, captured from the rendered original figures. Refresh them when changing a figure and preserve the SVG's exact pixel dimensions. The cover is exactly 1200 x 630 pixels. Do not substitute a screenshot of a vendor chart or present a conceptual diagram as measured data.
 
 ## What has and has not been built

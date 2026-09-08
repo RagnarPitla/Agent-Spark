@@ -209,6 +209,8 @@ export function researchArtifacts(root = ROOT) {
     ['site/research/visuals.html', visualsPage(root)],
     ['site/research/whitepaper.md', paper],
     ['site/research/article.md', article],
+    ['site/research/sources.md', sources],
+    ['site/research/lab.md', readFileSync(join(root, 'docs/research/lab.md'), 'utf8')],
     ['docs/research/whitepaper.md', paper],
     ['docs/research/article.md', article],
     ['site/research/sources.json', `${JSON.stringify(registry, null, 2)}\n`],

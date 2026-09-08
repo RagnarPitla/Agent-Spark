@@ -1,10 +1,24 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { dirname, join, resolve, sep } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { ROOT, researchArtifacts } from './build-research.mjs';
 import { figureArtifacts, figures } from './research-figures.mjs';
 
 const read = (path) => readFileSync(join(ROOT, path), 'utf8');
+function checkLocalReference(path, ref) {
+  if (/^(?:https?:|data:|mailto:)/.test(ref)) return;
+  const name = relative(ROOT, path);
+  const [relativePath, fragment] = ref.split('#');
+  const target = relativePath ? resolve(dirname(path), decodeURIComponent(relativePath.split('?')[0])) : path;
+  assert.ok(target.startsWith(ROOT + sep), `${name}: reference escapes repository: ${ref}`);
+  assert.ok(existsSync(target), `${name}: missing ${ref}`);
+  if (fragment && target.endsWith('.html')) {
+    const targetHtml = readFileSync(target, 'utf8');
+    const targetIds = new Set([...targetHtml.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
+    assert.ok(targetIds.has(fragment), `${name}: missing anchor ${ref}`);
+  }
+}
+
 const registry = JSON.parse(read('docs/research/sources.json'));
 const ids = new Set();
 const urls = new Set();
@@ -51,15 +65,14 @@ for (const name of htmlFiles) {
   assert.ok(!/<(?:script|link)[^>]+(?:src|href)="https?:/i.test(html), `${name}: external code or styles`);
   assert.ok(!/\b(?:fetch|eval)\s*\(|XMLHttpRequest|new WebSocket/.test(html), `${name}: unexpected live execution surface`);
   for (const [, ref] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-    if (/^(?:https?:|data:|mailto:)/.test(ref)) continue;
-    const [relativePath, fragment] = ref.split('#');
-    const target = relativePath ? resolve(dirname(path), decodeURIComponent(relativePath.split('?')[0])) : path;
-    assert.ok(target.startsWith(ROOT + sep), `${name}: reference escapes repository: ${ref}`);
-    assert.ok(existsSync(target), `${name}: missing ${ref}`);
-    if (fragment && target.endsWith('.html')) {
-      const targetHtml = readFileSync(target, 'utf8');
-      const targetIds = new Set([...targetHtml.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
-      assert.ok(targetIds.has(fragment), `${name}: missing anchor ${ref}`);
+    checkLocalReference(path, ref);
+  }
+}
+for (const directory of ['docs/research', 'site/research']) {
+  for (const name of readdirSync(join(ROOT, directory)).filter((file) => file.endsWith('.md'))) {
+    const path = join(ROOT, directory, name);
+    for (const [, ref] of readFileSync(path, 'utf8').matchAll(/\]\(([^)\s]+)\)/g)) {
+      checkLocalReference(path, ref);
     }
   }
 }
